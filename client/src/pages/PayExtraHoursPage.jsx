@@ -1,4 +1,3 @@
-import React from "react";
 import "./PayExtraHoursPage.scss";
 import { PayExtraHours } from "../components/PayExtraHours/PayExtraHours";
 import logo from "../../../server/public/images/logo.png";

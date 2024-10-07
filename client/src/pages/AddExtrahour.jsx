@@ -1,4 +1,3 @@
-import React from "react";
 import "./AddExtrahour.scss";
 import { FormExtraHour } from "../components/FormExtraHour/FormExtraHour";
 import logo from "../../../server/public/images/logo.png";

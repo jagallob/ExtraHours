@@ -1,4 +1,3 @@
-import React from "react";
 import "./ApprovePage.scss";
 import { Approve } from "../components/Approve/Approve";
 import logo from "../../../server/public/images/logo.png";

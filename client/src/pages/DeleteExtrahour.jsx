@@ -1,4 +1,3 @@
-import React from "react";
 import { UpdateAndDelete } from "../components/UpdateAndDelete/UpdateAndDelete";
 import "./DeleteExtrahour.scss";
 import logo from "../../../server/public/images/logo.png";

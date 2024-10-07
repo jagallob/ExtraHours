@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { addExtraHour } from "@services/addExtraHour";
 import { EmployeeInfo } from "../EmployeeInfo/EmployeeInfo";
 import "./FormExtraHour.scss";
@@ -16,7 +16,6 @@ export const FormExtraHour = () => {
     observations: "",
   });
 
-  const [employee, setEmployee] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -48,12 +47,7 @@ export const FormExtraHour = () => {
       ...prevData,
       extrasHours: parseFloat(sumExtraHours.toFixed(2)),
     }));
-  }, [
-    extraHours.diurnal,
-    extraHours.nocturnal,
-    extraHours.diurnalHoliday,
-    extraHours.nocturnalHoliday,
-  ]);
+  }, [extraHours]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -84,8 +78,6 @@ export const FormExtraHour = () => {
         extrasHours: 0,
         observations: "",
       });
-
-      setEmployee({});
     } catch (error) {
       setError(error.message);
     } finally {

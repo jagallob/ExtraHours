@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./EmployeeInfo.scss";
 const { Search } = Input;
 import { findEmployee } from "@services/findEmployee";
+import PropTypes from "prop-types";
 
 export const EmployeeInfo = ({ onIdChange }) => {
   const [employee, setEmployee] = useState({});
@@ -30,7 +31,9 @@ export const EmployeeInfo = ({ onIdChange }) => {
       <div className="search-container">
         <Search placeholder="Cédula" onSearch={onSearch} />
         {notFound && (
-          <span id="textoerror">Empleado no encontrado, intente con otra cédula</span>
+          <span id="textoerror">
+            Empleado no encontrado, intente con otra cédula
+          </span>
         )}
       </div>
 
@@ -56,4 +59,9 @@ export const EmployeeInfo = ({ onIdChange }) => {
       )}
     </div>
   );
+};
+
+// Definir las validaciones de las propiedades
+EmployeeInfo.propTypes = {
+  onIdChange: PropTypes.func.isRequired, // onIdChange debe ser una función y es requerido
 };

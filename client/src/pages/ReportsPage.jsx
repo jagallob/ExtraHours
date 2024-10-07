@@ -1,4 +1,3 @@
-import React from "react";
 import "./ReportsPage.scss";
 import { ReportInfo } from "../components/ReportInfo/ReportInfo";
 import logo from "../../../server/public/images/logo.png";

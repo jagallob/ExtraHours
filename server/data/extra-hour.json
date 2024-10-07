@@ -131,5 +131,38 @@
     "nocturnalHoliday": 0,
     "extrasHours": 0,
     "observations": ""
+  },
+  {
+    "registry": 509562,
+    "id": "",
+    "date": "",
+    "diurnal": 0,
+    "nocturnal": 0,
+    "diurnalHoliday": 0,
+    "nocturnalHoliday": 0,
+    "extrasHours": 0,
+    "observations": ""
+  },
+  {
+    "registry": 509718,
+    "id": "",
+    "date": "",
+    "diurnal": 0,
+    "nocturnal": 0,
+    "diurnalHoliday": 0,
+    "nocturnalHoliday": 0,
+    "extrasHours": 0,
+    "observations": ""
+  },
+  {
+    "registry": 521255,
+    "id": 123456,
+    "date": "2024-10-06",
+    "diurnal": 0,
+    "nocturnal": "2.5",
+    "diurnalHoliday": 0,
+    "nocturnalHoliday": 0,
+    "extrasHours": 2.5,
+    "observations": "Limpieza componenetes"
   }
 ]

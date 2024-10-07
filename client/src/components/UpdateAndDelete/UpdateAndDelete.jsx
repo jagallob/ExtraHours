@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Input, Table, Button, Modal, Form, InputNumber, message } from "antd";
 import { findEmployee } from "@services/findEmployee";
 import { findExtraHour } from "@services/findExtraHour";
 import { updateExtraHour } from "@services/updateExtraHour";
 import { deleteExtraHour } from "../../services/deleteExtraHour";
+import { columns as staticColumns } from "@utils/tableColumns";
 import "./UpdateAndDelete.scss";
 
 export const UpdateAndDelete = () => {
@@ -127,91 +128,26 @@ export const UpdateAndDelete = () => {
     }));
   };
 
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Empleado",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Salario",
-      dataIndex: "salary",
-      key: "salary",
-    },
-    {
-      title: "Cargo",
-      dataIndex: "position",
-      key: "position",
-    },
-    {
-      title: "Supervisor",
-      dataIndex: "supervisor",
-      key: "supervisor",
-    },
-    {
-      title: "Fecha",
-      dataIndex: "date",
-      key: "date",
-    },
-    {
-      title: "Diurnas",
-      dataIndex: "diurnal",
-      key: "diurnal",
-    },
-    {
-      title: "Nocturnas",
-      dataIndex: "nocturnal",
-      key: "nocturnal",
-    },
-    {
-      title: "Diurnas Festivas",
-      dataIndex: "diurnalHoliday",
-      key: "diurnalHoliday",
-    },
-    {
-      title: "Nocturnas Festivas",
-      dataIndex: "nocturnalHoliday",
-      key: "nocturnalHoliday",
-    },
-    {
-      title: "Total Horas Extras",
-      dataIndex: "extrasHours",
-      key: "extrasHours",
-    },
-    {
-      title: "Observaciones",
-      dataIndex: "observations",
-      key: "observations",
-    },
-    {
-      title: "Registro",
-      dataIndex: "registry",
-      key: "registry",
-    },
-    {
-      title: "Acciones",
-      key: "actions",
-      render: (text, record) => (
-        <span>
-          <Button
-            type="link"
-            onClick={() => handleUpdate(record)}
-            style={{ marginRight: 8 }}
-          >
-            Editar
-          </Button>
-          <Button type="link" onClick={() => handleDelete(record)}>
-            Eliminar
-          </Button>
-        </span>
-      ),
-    },
-  ];
+  const actionColumn = {
+    title: "Acciones",
+    key: "actions",
+    render: (text, record) => (
+      <span>
+        <Button
+          type="link"
+          onClick={() => handleUpdate(record)}
+          style={{ marginRight: 8 }}
+        >
+          Editar
+        </Button>
+        <Button type="link" onClick={() => handleDelete(record)}>
+          Eliminar
+        </Button>
+      </span>
+    ),
+  };
+
+  const columns = [...staticColumns, actionColumn]; // Combina las columnas
 
   return (
     <div className="ReportInfo">
