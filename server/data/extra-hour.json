@@ -164,5 +164,55 @@
     "nocturnalHoliday": 0,
     "extrasHours": 2.5,
     "observations": "Limpieza componenetes"
+  },
+  {
+    "registry": 488220,
+    "id": "",
+    "date": "",
+    "diurnal": 0,
+    "nocturnal": 0,
+    "diurnalHoliday": 0,
+    "nocturnalHoliday": 0,
+    "extrasHours": 0,
+    "observations": ""
+  },
+  {
+    "registry": 414238,
+    "id": 123456,
+    "date": "2024-10-10",
+    "startTime": "19:33",
+    "endTime": "23:50",
+    "diurnal": 2,
+    "nocturnal": 3,
+    "diurnalHoliday": 0,
+    "nocturnalHoliday": 0,
+    "extrasHours": 5,
+    "observations": ""
+  },
+  {
+    "registry": 330408,
+    "id": "",
+    "date": "2024-10-10",
+    "startTime": "21:51",
+    "endTime": "23:57",
+    "diurnal": 0,
+    "nocturnal": 3,
+    "diurnalHoliday": 0,
+    "nocturnalHoliday": 0,
+    "extrasHours": 3,
+    "observations": ""
+  },
+  {
+    "registry": 352657,
+    "id": 123456,
+    "date": "2024-10-11",
+    "startTime": "18:24",
+    "endTime": "23:14",
+    "diurnal": "2.60",
+    "nocturnal": "2.23",
+    "diurnalHoliday": "0.00",
+    "nocturnalHoliday": "0.00",
+    "extrasHours": "4.83",
+    "observations": "Actualizar calculador automático de horas extra"
   }
 ]

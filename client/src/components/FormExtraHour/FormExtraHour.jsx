@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import { addExtraHour } from "@services/addExtraHour";
 import { EmployeeInfo } from "../EmployeeInfo/EmployeeInfo";
 import "./FormExtraHour.scss";
+import { determineExtraHourType } from "@utils/extraHourCalculator";
 
 export const FormExtraHour = () => {
   const [extraHours, setExtraHours] = useState({
     registry: "",
     id: "",
     date: "",
+    startTime: "",
+    endTime: "",
     diurnal: 0,
     nocturnal: 0,
     diurnalHoliday: 0,
@@ -20,13 +23,12 @@ export const FormExtraHour = () => {
   const [error, setError] = useState(null);
 
   const handleIdChange = (id) => {
-    console.log("handleIdChange called with id:", id);
-    setExtraHours((prevData) => {
-      const updatedData = { ...prevData, id: parseInt(id, 10) };
-      console.log("extraHours updated to:", updatedData);
-      return updatedData;
-    });
+    setExtraHours((prevData) => ({
+      ...prevData,
+      id: parseInt(id, 10),
+    }));
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setExtraHours((prevData) => ({
@@ -35,42 +37,50 @@ export const FormExtraHour = () => {
     }));
   };
 
+  // useEffect para calcular horas extra automáticamente cuando se cambian los tiempos
   useEffect(() => {
-    const { diurnal, nocturnal, diurnalHoliday, nocturnalHoliday } = extraHours;
-    const sumExtraHours =
-      (parseFloat(diurnal, 10) || 0) +
-      (parseFloat(nocturnal, 10) || 0) +
-      (parseFloat(diurnalHoliday, 10) || 0) +
-      (parseFloat(nocturnalHoliday, 10) || 0);
-
-    setExtraHours((prevData) => ({
-      ...prevData,
-      extrasHours: parseFloat(sumExtraHours.toFixed(2)),
-    }));
-  }, [extraHours]);
+    if (extraHours.date && extraHours.startTime && extraHours.endTime) {
+      determineExtraHourType(
+        extraHours.date,
+        extraHours.startTime,
+        extraHours.endTime,
+        setError,
+        setExtraHours
+      );
+    }
+  }, [extraHours.date, extraHours.startTime, extraHours.endTime]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting form with extraHours:", extraHours);
     setLoading(true);
     setError(null);
 
+    // Llamar a determineExtraHourType para asegurar el cálculo antes de enviar
+    determineExtraHourType(
+      extraHours.date,
+      extraHours.startTime,
+      extraHours.endTime,
+      setError,
+      setExtraHours
+    );
+
     const registry = Date.now() % 1_000_000;
+
     const body = {
       ...extraHours,
       registry,
     };
-    console.log("Datos enviados:", body);
 
     try {
       await addExtraHour(body);
-
       alert("Horas extras agregadas exitosamente");
 
       setExtraHours({
         registry: "",
         id: "",
         date: "",
+        startTime: "",
+        endTime: "",
         diurnal: 0,
         nocturnal: 0,
         diurnalHoliday: 0,
@@ -89,12 +99,32 @@ export const FormExtraHour = () => {
     <form onSubmit={handleSubmit}>
       <EmployeeInfo onIdChange={handleIdChange} />
       <div>
-        <label htmlFor="date"></label>
+        <label htmlFor="date">Fecha</label>
         <input
           type="date"
           id="date"
           name="date"
           value={extraHours.date}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="startTime">Hora de inicio</label>
+        <input
+          type="time"
+          id="startTime"
+          name="startTime"
+          value={extraHours.startTime}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="endTime">Hora de fin</label>
+        <input
+          type="time"
+          id="endTime"
+          name="endTime"
+          value={extraHours.endTime}
           onChange={handleChange}
         />
       </div>
@@ -104,38 +134,39 @@ export const FormExtraHour = () => {
           type="number"
           name="diurnal"
           value={extraHours.diurnal}
-          onChange={handleChange}
           step="0.01"
+          readOnly
         />
         <label>Nocturna</label>
         <input
           type="number"
           name="nocturnal"
           value={extraHours.nocturnal}
-          onChange={handleChange}
           step="0.01"
+          readOnly
         />
         <label>Diurna Festiva</label>
         <input
           type="number"
           name="diurnalHoliday"
           value={extraHours.diurnalHoliday}
-          onChange={handleChange}
           step="0.01"
+          readOnly
         />
-        <label>Nocturna festiva</label>
+        <label>Nocturna Festiva</label>
         <input
           type="number"
           name="nocturnalHoliday"
           value={extraHours.nocturnalHoliday}
-          onChange={handleChange}
           step="0.01"
+          readOnly
         />
-        <label>Horas extra</label>
+        <label>Total horas extra</label>
         <input
           type="number"
           name="extrasHours"
           value={extraHours.extrasHours}
+          step="0.01"
           readOnly
         />
       </div>
