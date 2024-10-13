@@ -30,7 +30,7 @@ const getExportReport = async (request, response) => {
             nocturnalHoliday: extraHour.nocturnalHoliday,
             extraHour: extraHour.extraHour,
             date: extraHour.date,
-            supervisor: employee.supervisor,
+            manager: employee.manager,
           };
         } else {
           console.error(`Employee with id ${extraHour.id} not found`);

@@ -20,9 +20,9 @@ export const columns = [
     key: "position",
   },
   {
-    title: "Supervisor",
-    dataIndex: "supervisor",
-    key: "supervisor",
+    title: "Manager",
+    dataIndex: "manager",
+    key: "manager",
   },
   {
     title: "Fecha",

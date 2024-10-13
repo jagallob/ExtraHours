@@ -12,8 +12,8 @@
     "name": "Ana María García López",
     "position": "Analista nivel 2",
     "salary": 3246789,
-    "supervisor": "Carlos Miguel Pérez Sánchez",
-    "supervisorId": 1
+    "manager": "Carlos Miguel Pérez Sánchez",
+    "managerId": 1
   },
   {
     "registry": 570508,
@@ -28,8 +28,8 @@
     "name": "Ana María García López",
     "position": "Analista nivel 2",
     "salary": 3246789,
-    "supervisor": "Carlos Miguel Pérez Sánchez",
-    "supervisorId": 1
+    "manager": "Carlos Miguel Pérez Sánchez",
+    "managerId": 1
   },
   {
     "registry": 974296,
@@ -44,8 +44,8 @@
     "name": "Ana María García López",
     "position": "Analista nivel 2",
     "salary": 3246789,
-    "supervisor": "Carlos Miguel Pérez Sánchez",
-    "supervisorId": 1
+    "manager": "Carlos Miguel Pérez Sánchez",
+    "managerId": 1
   },
   {
     "registry": 974296,
@@ -60,8 +60,8 @@
     "name": "Ana María García López",
     "position": "Analista nivel 2",
     "salary": 3246789,
-    "supervisor": "Carlos Miguel Pérez Sánchez",
-    "supervisorId": 1
+    "manager": "Carlos Miguel Pérez Sánchez",
+    "managerId": 1
   },
   {
     "registry": 993002,
@@ -76,8 +76,8 @@
     "name": "Ana María García López",
     "position": "Analista nivel 2",
     "salary": 3246789,
-    "supervisor": "Carlos Miguel Pérez Sánchez",
-    "supervisorId": 1
+    "manager": "Carlos Miguel Pérez Sánchez",
+    "managerId": 1
   },
   {
     "registry": 570508,
@@ -92,8 +92,8 @@
     "name": "Ana María García López",
     "position": "Analista nivel 2",
     "salary": 3246789,
-    "supervisor": "Carlos Miguel Pérez Sánchez",
-    "supervisorId": 1
+    "manager": "Carlos Miguel Pérez Sánchez",
+    "managerId": 1
   },
   {
     "registry": 570508,
@@ -108,7 +108,7 @@
     "name": "Ana María García López",
     "position": "Analista nivel 2",
     "salary": null,
-    "supervisor": "Carlos Miguel Pérez Sánchez",
-    "supervisorId": 1
+    "manager": "Carlos Miguel Pérez Sánchez",
+    "managerId": 1
   }
 ]

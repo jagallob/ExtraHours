@@ -37,7 +37,7 @@ const getExtrahoursByDateRange = async (request, response) => {
         name: employee ? employee.name : "Unknown",
         position: employee ? employee.position : "Unknown",
         salary: employee ? employee.salary : "Unknown",
-        supervisor: employee ? employee.supervisor : "Unknown",
+        manager: employee ? employee.manager : "Unknown",
       };
     });
 

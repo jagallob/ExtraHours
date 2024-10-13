@@ -85,7 +85,7 @@ export const ReportInfo = () => {
         { header: "Empleado", key: "name", width: 30 },
         { header: "Salario", key: "salary", width: 15 },
         { header: "Cargo", key: "position", width: 30 },
-        { header: "Supervisor", key: "supervisor", width: 30 },
+        { header: "Manager", key: "manager", width: 30 },
         { header: "Fecha", key: "date", width: 15 },
         { header: "Diurnas", key: "diurnal", width: 10 },
         { header: "Nocturnas", key: "nocturnal", width: 10 },
