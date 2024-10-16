@@ -98,35 +98,41 @@ export const FormExtraHour = () => {
   return (
     <form onSubmit={handleSubmit}>
       <EmployeeInfo onIdChange={handleIdChange} />
-      <div>
-        <label htmlFor="date">Fecha</label>
-        <input
-          type="date"
-          id="date"
-          name="date"
-          value={extraHours.date}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="startTime">Hora de inicio</label>
-        <input
-          type="time"
-          id="startTime"
-          name="startTime"
-          value={extraHours.startTime}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="endTime">Hora de fin</label>
-        <input
-          type="time"
-          id="endTime"
-          name="endTime"
-          value={extraHours.endTime}
-          onChange={handleChange}
-        />
+      <div className="form-group-date-time">
+        <div>
+          <label htmlFor="date">Fecha</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            value={extraHours.date}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="startTime">Hora de inicio</label>
+          <input
+            type="time"
+            id="startTime"
+            name="startTime"
+            value={extraHours.startTime}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="endTime">
+            {" "}
+            <br />
+            Hora de fin
+          </label>
+          <input
+            type="time"
+            id="endTime"
+            name="endTime"
+            value={extraHours.endTime}
+            onChange={handleChange}
+          />
+        </div>
       </div>
       <div className="form-group-horizontal">
         <label>Diurna</label>
@@ -171,7 +177,11 @@ export const FormExtraHour = () => {
         />
       </div>
       <div>
-        <label htmlFor="observations">Observaciones</label>
+        <label htmlFor="observations">
+          {" "}
+          <br />
+          Observaciones
+        </label>
         <textarea
           id="observations"
           name="observations"
