@@ -1,15 +1,17 @@
 import { Input } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./EmployeeInfo.scss";
 const { Search } = Input;
 import { findEmployee } from "@services/findEmployee";
 import PropTypes from "prop-types";
 
-export const EmployeeInfo = ({ onIdChange }) => {
+export const EmployeeInfo = ({ onIdChange, reset, setReset }) => {
   const [employee, setEmployee] = useState({});
   const [notFound, setNotFound] = useState();
 
-  const onSearch = async (employeeId) => {
+  const onSearch = async (employeeId, event) => {
+    if (event) event.preventDefault();
+
     console.log("onSearch called with employeeId:", employeeId);
 
     try {
@@ -25,6 +27,14 @@ export const EmployeeInfo = ({ onIdChange }) => {
       setEmployee({});
     }
   };
+
+  useEffect(() => {
+    if (reset) {
+      setEmployee({});
+      setNotFound(false);
+      setReset(false);
+    }
+  }, [reset, setReset]);
 
   return (
     <div className="Info">
@@ -66,5 +76,7 @@ export const EmployeeInfo = ({ onIdChange }) => {
 
 // Definir las validaciones de las propiedades
 EmployeeInfo.propTypes = {
-  onIdChange: PropTypes.func.isRequired, // onIdChange debe ser una función y es requerido
+  onIdChange: PropTypes.func.isRequired,
+  reset: PropTypes.bool.isRequired,
+  setReset: PropTypes.func.isRequired,
 };

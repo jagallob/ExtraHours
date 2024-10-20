@@ -21,6 +21,7 @@ export const FormExtraHour = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [resetEmployeeInfo, setResetEmployeeInfo] = useState(false);
 
   const handleIdChange = (id) => {
     setExtraHours((prevData) => ({
@@ -88,6 +89,8 @@ export const FormExtraHour = () => {
         extrasHours: 0,
         observations: "",
       });
+
+      setResetEmployeeInfo(true);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -97,7 +100,11 @@ export const FormExtraHour = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <EmployeeInfo onIdChange={handleIdChange} />
+      <EmployeeInfo
+        onIdChange={handleIdChange}
+        reset={resetEmployeeInfo}
+        setReset={setResetEmployeeInfo}
+      />
       <div className="form-group-date-time">
         <div>
           <label htmlFor="date">Fecha</label>
