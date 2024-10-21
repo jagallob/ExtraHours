@@ -65,11 +65,11 @@ export const FormExtraHour = () => {
       setExtraHours
     );
 
-    const registry = Date.now() % 1_000_000;
+    // const registry = Date.now() % 1_000_000;
 
     const body = {
       ...extraHours,
-      registry,
+      // registry,
     };
 
     try {
