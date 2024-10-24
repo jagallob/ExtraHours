@@ -1,1 +1,0 @@
-SELECT * FROM gestion_horas_extra_amadeus.extra_hours;
