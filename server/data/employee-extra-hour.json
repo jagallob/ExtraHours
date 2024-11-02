@@ -110,5 +110,21 @@
     "salary": null,
     "manager": "Carlos Miguel Pérez Sánchez",
     "managerId": 1
+  },
+  {
+    "registry": 934206,
+    "id": 123456,
+    "date": "2024-08-21",
+    "diurnal": 1,
+    "nocturnal": 0,
+    "diurnalHoliday": 0,
+    "nocturnalHoliday": 0,
+    "extrasHours": 1,
+    "observations": "Ninguna",
+    "name": "Ana María García López",
+    "position": "Analista nivel 2",
+    "salary": null,
+    "manager": "Carlos Miguel Pérez Sánchez",
+    "managerId": 1
   }
 ]

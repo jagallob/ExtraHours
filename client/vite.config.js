@@ -14,6 +14,7 @@ export default defineConfig({
       "@scss": path.resolve("./src/scss"),
       "@services": path.resolve("./src/services"),
       "@utils": path.resolve("./src/utils"),
+      "@images": "/server/public/images",
     },
   },
 });
