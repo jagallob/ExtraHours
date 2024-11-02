@@ -7,13 +7,23 @@ export const determineExtraHourType = (
   startTime,
   endTime,
   setError,
-  setExtraHours
+  setExtraHours,
+  config
 ) => {
+  const {
+    diurnalMultiplier,
+    nocturnalMultiplier,
+    diurnalHolidayMultiplier,
+    nocturnalHolidayMultiplier,
+    diurnalStart,
+    diurnalEnd,
+  } = config;
+
   const startDateTime = new Date(`${date}T${startTime}`);
   const endDateTime = new Date(`${date}T${endTime}`);
 
   // Verificación para evitar que la hora de fin sea anterior a la de inicio
-  if (endDateTime <= startDateTime) {
+  if (endDateTime - startDateTime <= 0) {
     setError("La hora de fin debe ser posterior a la hora de inicio.");
     return;
   }
@@ -53,7 +63,7 @@ export const determineExtraHourType = (
     const hoursDiff = (actualEnd - current) / 1000 / 60 / 60;
 
     // Calcular horas diurnas (de 6:00 AM a 9:00 PM)
-    if (hour >= 6 && hour < 21) {
+    if (hour >= diurnalStart && hour < diurnalEnd) {
       if (hour === 20) {
         // Si estamos entre las 8:00 PM y las 9:00 PM
         const remainingMinutes = 21 * 60 - (hour * 60 + minutes); // Minutos restantes hasta las 9:00 PM
@@ -67,9 +77,9 @@ export const determineExtraHourType = (
       } else {
         handleExtraHours(isHoliday, hoursDiff, false); // Sumar horas diurnas
       }
-    } else if (hour >= 21 || hour < 6) {
-      if (hour < 6 && hour === 5) {
-        const remainingMinutes = 6 * 60 - (hour * 60 + minutes);
+    } else if (hour >= diurnalEnd || hour < diurnalStart) {
+      if (hour < diurnalStart && hour === 5) {
+        const remainingMinutes = diurnalStart * 60 - (hour * 60 + minutes);
         const remainingHours = remainingMinutes / 60;
 
         handleExtraHours(isHoliday, remainingHours, true); // Sumar a nocturna o festiva nocturna
@@ -87,13 +97,28 @@ export const determineExtraHourType = (
 
   const extrasHours = diurnal + nocturnal + diurnalHoliday + nocturnalHoliday;
 
+  console.log({
+    diurnal,
+    nocturnal,
+    diurnalHoliday,
+    nocturnalHoliday,
+    extrasHours,
+  });
+
   // Actualiza el estado con el valor redondeado a 2 decimales
+  const updatedExtraHours = {
+    diurnal: (diurnal * diurnalMultiplier).toFixed(2),
+    nocturnal: (nocturnal * nocturnalMultiplier).toFixed(2),
+    diurnalHoliday: (diurnalHoliday * diurnalHolidayMultiplier).toFixed(2),
+    nocturnalHoliday: (nocturnalHoliday * nocturnalHolidayMultiplier).toFixed(
+      2
+    ),
+    extrasHours: extrasHours.toFixed(2),
+  };
+
+  console.log("Valores actualizados de horas extra:", updatedExtraHours);
   setExtraHours((prevData) => ({
     ...prevData,
-    diurnal: diurnal.toFixed(2),
-    nocturnal: nocturnal.toFixed(2),
-    diurnalHoliday: diurnalHoliday.toFixed(2),
-    nocturnalHoliday: nocturnalHoliday.toFixed(2),
-    extrasHours: extrasHours.toFixed(2),
+    ...updatedExtraHours,
   }));
 };

@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { addExtraHour } from "@services/addExtraHour";
 import { EmployeeInfo } from "../EmployeeInfo/EmployeeInfo";
 import "./FormExtraHour.scss";
-import { determineExtraHourType } from "@utils/extraHourCalculator";
+import { determineExtraHourType } from "@utils/determineExtraHourType";
+import { useConfig } from "../../utils/ConfigProvider";
 
 export const FormExtraHour = () => {
   const [extraHours, setExtraHours] = useState({
@@ -22,6 +23,7 @@ export const FormExtraHour = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [resetEmployeeInfo, setResetEmployeeInfo] = useState(false);
+  const config = useConfig();
 
   const handleIdChange = (id) => {
     setExtraHours((prevData) => ({
@@ -38,7 +40,7 @@ export const FormExtraHour = () => {
     }));
   };
 
-  // useEffect para calcular horas extra automáticamente cuando se cambian los tiempos
+  // useEffect para calcular horas extra automáticamente cuando se cambian los tiempos o la configuración
   useEffect(() => {
     if (extraHours.date && extraHours.startTime && extraHours.endTime) {
       determineExtraHourType(
@@ -46,34 +48,19 @@ export const FormExtraHour = () => {
         extraHours.startTime,
         extraHours.endTime,
         setError,
-        setExtraHours
+        setExtraHours,
+        config
       );
     }
-  }, [extraHours.date, extraHours.startTime, extraHours.endTime]);
+  }, [extraHours.date, extraHours.startTime, extraHours.endTime, config]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    // Llamar a determineExtraHourType para asegurar el cálculo antes de enviar
-    determineExtraHourType(
-      extraHours.date,
-      extraHours.startTime,
-      extraHours.endTime,
-      setError,
-      setExtraHours
-    );
-
-    // const registry = Date.now() % 1_000_000;
-
-    const body = {
-      ...extraHours,
-      // registry,
-    };
-
     try {
-      await addExtraHour(body);
+      await addExtraHour(extraHours);
       alert("Horas extras agregadas exitosamente");
 
       setExtraHours({
