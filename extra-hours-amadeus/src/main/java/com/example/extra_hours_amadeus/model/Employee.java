@@ -5,9 +5,10 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "employees")
 public class Employee {
+
     @Id
     @Column(name = "id", nullable = false)
-    private int id;
+    private Long   id;
     private String name;
     private String position;
     private Double salary;
@@ -17,13 +18,14 @@ public class Employee {
     private int managerId;
 
     // Getters y Setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
+
 
     public String getName() {
         return name;
