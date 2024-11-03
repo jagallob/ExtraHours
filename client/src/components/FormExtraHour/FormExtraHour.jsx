@@ -42,6 +42,7 @@ export const FormExtraHour = () => {
 
   // useEffect para calcular horas extra automáticamente cuando se cambian los tiempos o la configuración
   useEffect(() => {
+    console.log("Configuración obtenida:", config);
     if (extraHours.date && extraHours.startTime && extraHours.endTime) {
       determineExtraHourType(
         extraHours.date,

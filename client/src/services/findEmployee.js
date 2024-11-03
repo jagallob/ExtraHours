@@ -1,11 +1,18 @@
-export const findEmployee = async (id) => {
+export const findEmployee = async (employeeId) => {
   try {
-    const response = await fetch(`http://localhost:4000/employee-info/${id}`);
+    const response = await fetch(
+      `http://localhost:8080/api/employees/${employeeId}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Error al obtener la información del empleado");
+    }
+
     const data = await response.json();
 
     return data;
   } catch (error) {
-    console.error(error);
+    console.error("Error al buscar empleado:", error);
 
     throw error;
   }
