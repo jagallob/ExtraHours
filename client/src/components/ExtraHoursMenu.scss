@@ -14,18 +14,19 @@ body {
 h1 {
   font-size: 30px;
   margin-bottom: 80px;
-  color: aliceblue;
+  color: whitesmoke;
   text-align: center;
   font-family: sans-serif;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 40px;
-  width: 70%;
+  width: 40%;
   max-width: 1200px;
   margin: auto;
+  
 }
 
 .menu-item {

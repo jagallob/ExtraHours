@@ -62,7 +62,7 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <h2>Iniciar Sesión</h2>
+      <h2>Bienvenido</h2>
       <Form name="login-form" onFinish={handleLogin} layout="vertical">
         <Form.Item
           label="Usuario"
