@@ -13,16 +13,15 @@ const Settings = () => {
           {/* <h1 class="heading">Horas Extra Amadeus</h1> */}
         </a>
       </header>
-
-      <h2>Configuraciones</h2>
+      <h2>Legislación Horas Extra</h2>
       <div className="settings__container">
         <aside className="settings__article">
-          <p>
+          <article>
             En Colombia, el pago de las horas extra está regulado por el Código
             Sustantivo del Trabajo, y depende de varios factores como la jornada
             laboral, la hora en que se realicen las horas extra y si estas
             coinciden con días festivos o fines de semana.
-          </p>
+          </article>
           <ol>
             <li>
               <strong>Jornada Ordinaria de Trabajo:</strong> Jornada Diurna: De
