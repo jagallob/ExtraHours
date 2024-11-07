@@ -10,8 +10,9 @@ h2 {
   display: flex;
   align-items: center;
   width: 0;
-  justify-content: left;
+  justify-content: right;
   margin-top: 10px;
+
 
   a {
     display: flex;
@@ -19,15 +20,12 @@ h2 {
     align-items: center;
 
     .logoamadeus {
-      width: 10rem;
+      width: 11rem;
       padding: 0;
       margin: 0;
-    }
-
-    .logohome {
-      width: 2rem;
-      margin: 0;
-      padding: 0;
+      display: inline;
+      position: relative;
+      border: 1px;
     }
   }
 }
