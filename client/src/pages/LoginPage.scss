@@ -15,13 +15,16 @@ body {
   max-width: 400px;
   margin: 100px auto;
   padding: 20px;
-  background-color: rgb(85, 99, 224);
+  background-color: #3a8bff;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgb(106, 105, 105);
 
   h2 {
     text-align: center;
     margin-bottom: 20px;
+    color: whitesmoke;
+    font-family: Arial, Helvetica, sans-serif;
+  
   }
 
   .ant-form-item {
@@ -30,6 +33,12 @@ body {
     margin-bottom: 5px;
     height: 85px;
     padding: 28px;
+    border-radius: 10px;
+    align-items: center;
+    
+  }
+  .ant-form-item label {
+    color: #ccc; 
   }
 
   .button {
@@ -38,5 +47,6 @@ body {
     align-items: center;
     text-align: center;
     padding: 0;
+    
   }
 }
