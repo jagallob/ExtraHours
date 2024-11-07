@@ -2,7 +2,7 @@ import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import "./SettingsPage.scss";
 import Configuracion from "../../assets/images/Configuracion.png";
 import Pagar from "../../assets/images/Pagar.png";
-import regresar from "../../assets/images/regresar.png";
+import Regresar from "../../assets/images/Regresar.png";
 
 const SettingsPage = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const SettingsPage = () => {
         {isSubPage ? (
           <div className="mini-icons">
             <div onClick={() => navigate("/settings")}>
-              <img className="regresar" src={regresar} alt="Inicio" />
+              <img className="regresar" src={Regresar} alt="Inicio" />
               <p>Regresar</p>
             </div>
           </div>
