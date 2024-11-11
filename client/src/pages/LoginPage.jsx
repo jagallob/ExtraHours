@@ -14,10 +14,10 @@ const Login = () => {
     if (auth?.role) {
       switch (auth.role) {
         case "empleado":
-          navigate("/add");
+          navigate("/menu");
           break;
         case "manager":
-          navigate("/settings");
+          navigate("/menu");
           break;
         case "superusuario":
           navigate("/menu");
