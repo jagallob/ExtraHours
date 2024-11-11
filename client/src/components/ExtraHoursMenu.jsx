@@ -10,7 +10,16 @@ import NominaAprobar from "../assets/images/NominaAprobar.png";
 
 const ExtraHoursMenu = () => {
   const navigate = useNavigate();
-  const { auth } = useAuth();
+  const { auth, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      window.location.href = "/"; // Redirige al usuario al login
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
 
   // Mostrar las opciones según el rol
   const renderMenuItems = () => {
@@ -88,6 +97,9 @@ const ExtraHoursMenu = () => {
       <div className="menu">
         <h1>Horas extra Amadeus</h1>
         <div className="grid">{renderMenuItems()}</div>
+        <button className="logout-button" onClick={handleLogout}>
+          Cerrar Sesión
+        </button>
       </div>
     </div>
   );

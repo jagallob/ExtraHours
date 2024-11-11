@@ -1,12 +1,25 @@
-export const deleteEmployee = async (id) => {
+export const deleteEmployee = async (employeeId) => {
   try {
-    const response = await fetch(`http://localhost:8080/api/employee${id}`, {
+    const options = {
       method: "DELETE",
-    });
-    if (!response.ok) throw new Error("Error al eliminar empleado");
-    return await response.json();
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    const response = await fetch(
+      `http://localhost:8080/api/employee/${employeeId}`,
+      options
+    );
+
+    if (!response.ok) {
+      throw new Error("Error en la solicitud");
+    }
+
+    return;
   } catch (error) {
-    console.error(error);
+    console.error("Error al eliminar empleado:", error);
     throw error;
   }
 };

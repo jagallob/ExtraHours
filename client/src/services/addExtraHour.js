@@ -1,11 +1,12 @@
-export const addExtraHour = async (body) => {
+export const addExtraHour = async (extraHour) => {
   try {
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(extraHour),
     };
 
     // console.log("Enviando datos:", body);

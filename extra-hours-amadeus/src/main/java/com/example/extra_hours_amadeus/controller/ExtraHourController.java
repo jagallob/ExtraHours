@@ -1,6 +1,6 @@
 package com.example.extra_hours_amadeus.controller;
 
-import com.example.extra_hours_amadeus.model.ExtraHour;
+import com.example.extra_hours_amadeus.entity.ExtraHour;
 import com.example.extra_hours_amadeus.repository.ExtraHourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,3 +26,4 @@ public class ExtraHourController {
         return extraHourRepository.findAll();
     }
 }
+

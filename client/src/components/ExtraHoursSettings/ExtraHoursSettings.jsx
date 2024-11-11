@@ -20,11 +20,11 @@ const ExtraHoursSettings = () => {
     try {
       const updatedValues = {
         ...values,
-        diurnalStart: values.diurnalStart.format("HH:mm"),
-        diurnalEnd: values.diurnalEnd.format("HH:mm"),
+        diurnal_start: values.diurnal_start.format("HH:mm"),
+        diurnal_end: values.diurnal_end.format("HH:mm"),
       };
 
-      const updatedConfig = await updateConfig(updatedValues); // Llama a la función updateConfig
+      const updatedConfig = await updateConfig(updatedValues); // Llama a la función updateConfig y Pasa el token como argumento
       setConfig(updatedConfig);
       message.success("Configuración actualizada correctamente");
     } catch (error) {
@@ -33,6 +33,10 @@ const ExtraHoursSettings = () => {
       setLoading(false);
     }
   };
+
+  if (!config) {
+    return <div>Loading configuration...</div>;
+  }
 
   return (
     <div className="config-extra-hours">
@@ -43,40 +47,55 @@ const ExtraHoursSettings = () => {
         onFinish={handleSubmit}
         initialValues={{
           ...config,
-          diurnalStart: dayjs(config.diurnalStart, "HH:mm"),
-          diurnalEnd: dayjs(config.diurnalEnd, "HH:mm"),
+          diurnal_start: dayjs(config.diurnal_start, "HH:mm"),
+          diurnal_end: dayjs(config.diurnal_end, "HH:mm"),
         }}
       >
-        <Form.Item label="Multiplicador Hora Diurna" name="diurnalMultiplier">
+        <Form.Item
+          label="Multiplicador Hora Diurna"
+          name="diurnal_multiplier"
+          initialValue={config.diurnal_multiplier}
+        >
           <InputNumber min={1} step={0.1} />
         </Form.Item>
 
         <Form.Item
           label="Multiplicador Hora Nocturna"
-          name="nocturnalMultiplier"
+          name="nocturnal_multiplier"
+          initialValue={config.nocturnal_multiplier}
         >
           <InputNumber min={1} step={0.1} />
         </Form.Item>
 
         <Form.Item
           label="Multiplicador Hora Festiva Diurna"
-          name="diurnalHolidayMultiplier"
+          name="diurnal_holiday_multiplier"
+          initialValue={config.diurnal_holiday_multiplier}
         >
           <InputNumber min={1} step={0.1} />
         </Form.Item>
 
         <Form.Item
           label="Multiplicador Hora Festiva Nocturna"
-          name="nocturnalHolidayMultiplier"
+          name="nocturnal_holiday_multiplier"
+          initialValue={config.nocturnal_holiday_multiplier}
         >
           <InputNumber min={1} step={0.1} />
         </Form.Item>
 
-        <Form.Item label="Inicio Hora Diurna (24h)" name="diurnalStart">
+        <Form.Item
+          label="Inicio Hora Diurna (24h)"
+          name="diurnal_start"
+          initialValue={dayjs(config.diurnal_start, "HH:mm")}
+        >
           <TimePicker format="HH:mm" />
         </Form.Item>
 
-        <Form.Item label="Fin Hora Diurna (24h)" name="diurnalEnd">
+        <Form.Item
+          label="Fin Hora Diurna (24h)"
+          name="diurnal_end"
+          initialValue={dayjs(config.diurnal_end, "HH:mm")}
+        >
           <TimePicker format="HH:mm" />
         </Form.Item>
 

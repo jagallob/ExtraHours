@@ -12,7 +12,7 @@ export const UpdateAndDelete = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const handleSearch = async (idOrRegistry) => {
     const numericIdOrRegistry = parseInt(idOrRegistry, 10);
@@ -68,7 +68,7 @@ export const UpdateAndDelete = () => {
 
   const handleUpdate = (record) => {
     setSelectedRow(record);
-    setIsModalVisible(true);
+    setEditModalOpen(true);
   };
 
   const handleSave = async (values) => {
@@ -108,7 +108,7 @@ export const UpdateAndDelete = () => {
       console.error("Error al actualizar:", error);
       message.error("Error al actualizar el registro");
     } finally {
-      setIsModalVisible(false);
+      setEditModalOpen(false);
     }
   };
 
@@ -177,10 +177,10 @@ export const UpdateAndDelete = () => {
         </div>
       )}
 
-      {isModalVisible && (
+      {isEditModalOpen && (
         <Modal
-          open={isModalVisible}
-          onCancel={() => setIsModalVisible(false)}
+          open={isEditModalOpen}
+          onCancel={() => setEditModalOpen(false)}
           footer={null}
         >
           <div className="modal__container">

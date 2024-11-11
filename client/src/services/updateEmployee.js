@@ -1,16 +1,27 @@
-export const updateEmployee = async (id, data) => {
+export const updateEmployee = async (employeeId, employeeData) => {
   try {
-    const response = await fetch(`http://localhost:8080/api/employee/${id}`, {
+    const options = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify(data),
-    });
-    if (!response.ok) throw new Error("Error al actualizar empleado");
-    return await response.json();
+      body: JSON.stringify(employeeData),
+    };
+
+    const response = await fetch(
+      `http://localhost:8080/api/employee/${employeeId}`,
+      options
+    );
+
+    if (!response.ok) {
+      throw new Error("Error en la solicitud");
+    }
+
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error(error);
+    console.error("Error al actualizar empleado:", error);
     throw error;
   }
 };

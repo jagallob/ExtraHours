@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button, message } from "antd";
 import { useAuth } from "../utils/AuthContext";
+import { UserService } from "../services/UserService";
 import "./LoginPage.scss";
 
 const Login = () => {
@@ -9,55 +10,44 @@ const Login = () => {
   const navigate = useNavigate();
   const { auth, login } = useAuth();
 
-  //Simulación de ussuarios con roles
-  const users = [
-    { username: "empleado", password: "empleado123", role: "empleado" },
-    { username: "manager", password: "manager123", role: "manager" },
-    {
-      username: "superusuario",
-      password: "superusuario123",
-      role: "superusuario",
-    },
-  ];
-
   useEffect(() => {
-    if (auth) {
+    if (auth?.role) {
       switch (auth.role) {
         case "empleado":
-          navigate("/empleado-dashboard");
+          navigate("/add");
           break;
         case "manager":
-          navigate("/manager-dashboard");
+          navigate("/settings");
           break;
         case "superusuario":
-          navigate("/superusuario-dashboard");
+          navigate("/menu");
           break;
         default:
-          navigate("/");
+          navigate("/"); // Página por defecto si no coincide con ningún rol
           break;
       }
     }
   }, [auth, navigate]);
 
-  const handleLogin = (values) => {
+  const handleLogin = async (values) => {
     setLoading(true);
 
-    //Simulación de la autenticación
-    const user = users.find(
-      (user) =>
-        user.username === values.username && user.password === values.password
-    );
+    try {
+      const data = await UserService.login(values.email, values.password);
+      console.log(data);
+      const { token, role } = data;
 
-    if (user) {
-      message.success(`Bienvenido ${user.username}`);
-
-      login(user.role);
-      navigate("/menu");
-    } else {
+      if (role) {
+        login({ token, role: role });
+        message.success(`Bienvenido ${values.email}`);
+      } else {
+        message.error("No se pudo determinar el rol del usuario");
+      }
+    } catch (error) {
       message.error("Usuario o contraseña incorrectos");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
@@ -65,11 +55,16 @@ const Login = () => {
       <h2>Bienvenido</h2>
       <Form name="login-form" onFinish={handleLogin} layout="vertical">
         <Form.Item
-          label="Usuario"
-          name="username"
-          rules={[{ required: true, message: "Por favor ingrese su usuario" }]}
+          label="Correo Electrónico"
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: "Por favor ingrese su correo electrónico",
+            },
+          ]}
         >
-          <Input placeholder="Usuario" />
+          <Input placeholder="example@mail.com" />
         </Form.Item>
 
         <Form.Item

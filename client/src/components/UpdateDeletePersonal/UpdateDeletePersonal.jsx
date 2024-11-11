@@ -81,11 +81,11 @@ const UpdateDeletePersonal = () => {
       dataIndex: "position",
       key: "position",
     },
-    {
-      title: "Manager",
-      dataIndex: "manager",
-      key: "manager",
-    },
+    // {
+    //   title: "Manager",
+    //   dataIndex: "manager",
+    //   key: "manager",
+    // },
     {
       title: "ManagerId",
       dataIndex: "manager_id",
@@ -130,13 +130,13 @@ const UpdateDeletePersonal = () => {
           </Form.Item>
           <Form.Item name="position" label="Cargo" rules={[{ required: true }]}>
             <Input />
-          </Form.Item>
+            {/* </Form.Item>
           <Form.Item
             name="manager"
             label="Manager"
             rules={[{ required: true }]}
           >
-            <Input />
+            <Input /> */}
           </Form.Item>
           <Form.Item
             name="manager_id"

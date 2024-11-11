@@ -23,7 +23,7 @@ export const FormExtraHour = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [resetEmployeeInfo, setResetEmployeeInfo] = useState(false);
-  const config = useConfig();
+  const { config, isLoading } = useConfig();
 
   const handleIdChange = (id) => {
     setExtraHours((prevData) => ({
@@ -42,18 +42,26 @@ export const FormExtraHour = () => {
 
   // useEffect para calcular horas extra automáticamente cuando se cambian los tiempos o la configuración
   useEffect(() => {
-    console.log("Configuración obtenida:", config);
-    if (extraHours.date && extraHours.startTime && extraHours.endTime) {
-      determineExtraHourType(
-        extraHours.date,
-        extraHours.startTime,
-        extraHours.endTime,
-        setError,
-        setExtraHours,
-        config
-      );
+    if (!isLoading && config) {
+      console.log("Configuración obtenida:", config);
+      if (extraHours.date && extraHours.startTime && extraHours.endTime) {
+        determineExtraHourType(
+          extraHours.date,
+          extraHours.startTime,
+          extraHours.endTime,
+          setError,
+          setExtraHours,
+          config
+        );
+      }
     }
-  }, [extraHours.date, extraHours.startTime, extraHours.endTime, config]);
+  }, [
+    extraHours.date,
+    extraHours.startTime,
+    extraHours.endTime,
+    config,
+    isLoading,
+  ]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -85,6 +93,10 @@ export const FormExtraHour = () => {
       setLoading(false);
     }
   };
+
+  if (isLoading) {
+    return <div>Loading extra hours configuration...</div>;
+  }
 
   return (
     <form onSubmit={handleSubmit}>
