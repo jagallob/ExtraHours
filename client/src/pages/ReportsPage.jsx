@@ -1,4 +1,3 @@
-import React from "react"; // Import React
 import { Link } from "react-router-dom"; // Import Link from React Router
 import "./ReportsPage.scss";
 import { ReportInfo } from "../components/ReportInfo/ReportInfo";
@@ -8,9 +7,9 @@ const Reports = () => {
   return (
     <>
       <header className="page__header">
-         <Link to="/menu">
-            <img className="logoamadeus" src={logoamadeus} alt="Logo Amadeus" />
-          </Link>
+        <Link to="/menu">
+          <img className="logoamadeus" src={logoamadeus} alt="Logo Amadeus" />
+        </Link>
       </header>
       <h2>Informes</h2>
       <ReportInfo />

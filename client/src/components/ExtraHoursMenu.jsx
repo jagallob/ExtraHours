@@ -33,6 +33,10 @@ const ExtraHoursMenu = () => {
               </div>
               <p>Agregar</p>
             </div>
+            <div className="menu-item" onClick={() => navigate("/reports")}>
+              <img src={Informes} alt="Informes" />
+              <p>Informes</p>
+            </div>
           </>
         );
 
