@@ -1,6 +1,6 @@
 package com.example.extra_hours_amadeus.service;
 
-import com.example.extra_hours_amadeus.model.ExtraHoursConfig;
+import com.example.extra_hours_amadeus.entity.ExtraHoursConfig;
 import com.example.extra_hours_amadeus.repository.ExtraHoursConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

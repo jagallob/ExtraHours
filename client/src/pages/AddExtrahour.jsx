@@ -1,4 +1,3 @@
-import React from "react"; // Import React
 import { Link } from "react-router-dom"; // Import Link from React Router
 import "./AddExtrahour.scss"; // Import your styles
 import { FormExtraHour } from "../components/FormExtraHour/FormExtraHour"; // Import your form component
@@ -22,5 +21,3 @@ const AddExtrahour = () => {
 };
 
 export default AddExtrahour;
-
-

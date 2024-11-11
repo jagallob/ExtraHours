@@ -1,24 +1,23 @@
-package com.example.extra_hours_amadeus.config;
+package com.example.extra_hours_amadeus.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.time.LocalTime;
 
 @Entity
-public class Config {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Table(name = "extra_hours_config")
+public class ExtraHoursConfig {
 
+    @Id
+    private Long id = 1L; // Mantener un solo registro con un id fijo
     private double diurnal_multiplier;
     private double nocturnal_multiplier;
     private double diurnal_holiday_multiplier;
     private double nocturnal_holiday_multiplier;
     private LocalTime diurnal_start;
-    private LocalTime  diurnal_end;
+    private LocalTime diurnal_end;
 
     public Long getId() {
         return id;
@@ -60,19 +59,19 @@ public class Config {
         this.nocturnal_holiday_multiplier = nocturnal_holiday_multiplier;
     }
 
-    public LocalTime  getDiurnal_start() {
+    public LocalTime getDiurnal_start() {
         return diurnal_start;
     }
 
-    public void setDiurnal_start(LocalTime  diurnal_start) {
+    public void setDiurnal_start(LocalTime diurnal_start) {
         this.diurnal_start = diurnal_start;
     }
 
-    public LocalTime  getDiurnal_end() {
+    public LocalTime getDiurnal_end() {
         return diurnal_end;
     }
 
-    public void setDiurnal_end(LocalTime  diurnal_end) {
+    public void setDiurnal_end(LocalTime diurnal_end) {
         this.diurnal_end = diurnal_end;
     }
 }

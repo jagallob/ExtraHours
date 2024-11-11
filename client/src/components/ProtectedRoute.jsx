@@ -6,12 +6,18 @@ import { useAuth } from "../utils/AuthContext";
 const ProtectedRoute = ({ element, allowedRoles }) => {
   const { auth } = useAuth();
 
-  // Verificar si el ususario está autenticado y tiene un rol permitido
-  if (!auth || !auth.role || !allowedRoles.includes(auth.role)) {
+  // Verificar si el usuario está autenticado y tiene un rol permitido
+  if (!auth || !auth.role) {
+    // Si no está autenticado, redirige al inicio de sesión
     return <Navigate to="/" replace />;
   }
 
-  return <>{element}</>;
+  if (!allowedRoles.includes(auth.role)) {
+    // Si está autenticado pero no tiene el rol permitido, redirige a una página de acceso denegado o al menú
+    return <Navigate to="/menu" replace />;
+  }
+
+  return element;
 };
 
 ProtectedRoute.propTypes = {

@@ -1,18 +1,15 @@
-export const addExtraHour = async (extraHour) => {
+export const deleteEmployee = async (employeeId) => {
   try {
     const options = {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify(extraHour),
     };
 
-    // console.log("Enviando datos:", body);
-
     const response = await fetch(
-      `http://localhost:8080/api/extra-hour`,
+      `http://localhost:8080/api/employee/${employeeId}`,
       options
     );
 
@@ -20,12 +17,9 @@ export const addExtraHour = async (extraHour) => {
       throw new Error("Error en la solicitud");
     }
 
-    const data = await response.json();
-
-    return data;
+    return;
   } catch (error) {
-    console.error("Error al agregar horas extra:", error);
-
+    console.error("Error al eliminar empleado:", error);
     throw error;
   }
 };

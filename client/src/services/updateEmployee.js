@@ -1,7 +1,7 @@
-export const addEmployee = async (employeeData) => {
+export const updateEmployee = async (employeeId, employeeData) => {
   try {
     const options = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -9,7 +9,10 @@ export const addEmployee = async (employeeData) => {
       body: JSON.stringify(employeeData),
     };
 
-    const response = await fetch(`http://localhost:8080/api/employee`, options);
+    const response = await fetch(
+      `http://localhost:8080/api/employee/${employeeId}`,
+      options
+    );
 
     if (!response.ok) {
       throw new Error("Error en la solicitud");
@@ -18,7 +21,7 @@ export const addEmployee = async (employeeData) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error al agregar empleado:", error);
+    console.error("Error al actualizar empleado:", error);
     throw error;
   }
 };

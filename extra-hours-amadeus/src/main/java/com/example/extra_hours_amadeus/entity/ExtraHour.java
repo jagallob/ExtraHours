@@ -1,4 +1,4 @@
-package com.example.extra_hours_amadeus.model;
+package com.example.extra_hours_amadeus.entity;
 
 import jakarta.persistence.*;
 
@@ -110,3 +110,4 @@ public class ExtraHour {
         this.observations = observations;
     }
 }
+

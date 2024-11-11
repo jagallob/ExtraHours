@@ -14,26 +14,36 @@ const ConfigContext = createContext();
  */
 
 export const ConfigProvider = ({ children }) => {
-  const [config, setConfig] = useState({
-    diurnalMultiplier: 1.25,
-    nocturnalMultiplier: 1.75,
-    diurnalHolidayMultiplier: 2,
-    nocturnalHolidayMultiplier: 2.5,
-    diurnalStart: "06:00",
-    diurnalEnd: "21:00",
-  });
+  const [config, setConfig] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/config");
-        const data = await response.json();
-        setConfig(data);
+        const response = await fetch("http://localhost:8080/api/config", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Asegúrate de obtener el token de manera adecuada
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setConfig(data);
+        } else {
+          console.error("Error fetching configuration:", response.statusText);
+        }
       } catch (error) {
         console.error("Error fetching configuration:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchConfig();
   }, []);
+
+  if (isLoading) {
+    return <div>Loading configuration...</div>;
+  }
 
   return (
     <ConfigContext.Provider value={{ config, setConfig }}>
