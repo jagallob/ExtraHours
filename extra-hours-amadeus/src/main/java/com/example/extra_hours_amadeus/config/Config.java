@@ -28,51 +28,51 @@ public class Config {
         this.id = id;
     }
 
-    public double getDiurnal_multiplier() {
+    public double getdiurnal_multiplier() {
         return diurnal_multiplier;
     }
 
-    public void setDiurnal_multiplier(double diurnal_multiplier) {
+    public void setdiurnal_multiplier(double diurnal_multiplier) {
         this.diurnal_multiplier = diurnal_multiplier;
     }
 
-    public double getNocturnal_multiplier() {
+    public double getnocturnal_multiplier() {
         return nocturnal_multiplier;
     }
 
-    public void setNocturnal_multiplier(double nocturnal_multiplier) {
+    public void setnocturnal_multiplier(double nocturnal_multiplier) {
         this.nocturnal_multiplier = nocturnal_multiplier;
     }
 
-    public double getDiurnal_holiday_multiplier() {
+    public double getdiurnal_holiday_multiplier() {
         return diurnal_holiday_multiplier;
     }
 
-    public void setDiurnal_holiday_multiplier(double diurnal_holiday_multiplier) {
+    public void setdiurnal_holiday_multiplier(double diurnal_holiday_multiplier) {
         this.diurnal_holiday_multiplier = diurnal_holiday_multiplier;
     }
 
-    public double getNocturnal_holiday_multiplier() {
+    public double getnocturnal_holiday_multiplier() {
         return nocturnal_holiday_multiplier;
     }
 
-    public void setNocturnal_holiday_multiplier(double nocturnal_holiday_multiplier) {
+    public void setnocturnal_holiday_multiplier(double nocturnal_holiday_multiplier) {
         this.nocturnal_holiday_multiplier = nocturnal_holiday_multiplier;
     }
 
-    public LocalTime  getDiurnal_start() {
+    public LocalTime getdiurnal_start() {
         return diurnal_start;
     }
 
-    public void setDiurnal_start(LocalTime  diurnal_start) {
+    public void setdiurnal_start(LocalTime diurnal_start) {
         this.diurnal_start = diurnal_start;
     }
 
-    public LocalTime  getDiurnal_end() {
+    public LocalTime getdiurnal_end() {
         return diurnal_end;
     }
 
-    public void setDiurnal_end(LocalTime  diurnal_end) {
+    public void setdiurnal_end(LocalTime diurnal_end) {
         this.diurnal_end = diurnal_end;
     }
 }

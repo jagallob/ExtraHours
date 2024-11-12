@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
@@ -11,14 +11,6 @@ export const AuthProvider = ({ children }) => {
     const role = localStorage.getItem("role");
     return token && role ? { token, role } : null;
   });
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
-    if (token && role) {
-      setAuth({ token, role });
-    }
-  }, []);
 
   const login = ({ token, role }) => {
     setAuth({ token, role });

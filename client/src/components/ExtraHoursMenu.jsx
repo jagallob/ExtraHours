@@ -15,7 +15,6 @@ const ExtraHoursMenu = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      window.location.href = "/"; // Redirige al usuario al login
     } catch (error) {
       console.error("Error during logout:", error);
     }

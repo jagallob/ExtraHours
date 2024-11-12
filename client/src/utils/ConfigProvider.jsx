@@ -22,7 +22,7 @@ export const ConfigProvider = ({ children }) => {
       try {
         const response = await fetch("http://localhost:8080/api/config", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // Asegúrate de obtener el token de manera adecuada
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
         });
