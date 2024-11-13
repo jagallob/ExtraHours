@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class JWTAuthFilter extends OncePerRequestFilter {
@@ -52,17 +56,29 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
         userEmail = jwtUtils.extractUsername(jwtToken);
 
+        List<GrantedAuthority> authorities = null;
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = ourUserDetailsService.loadUserByUsername(userEmail);
 
+            // Verificar si el token es válido y si coincide con los roles actuales del usuario en la base de datos
             if (jwtUtils.isTokenValid(jwtToken, userDetails)) {
-                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
+                authorities = new ArrayList<>(userDetails.getAuthorities());
+
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, authorities
                 );
-                token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(token);
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            } else if (jwtUtils.isTokenExpired(jwtToken)) {
+                // Genera un nuevo token de acceso si el actual está expirado
+                String newAccessToken = jwtUtils.generateToken(userDetails);
+                response.setHeader("Authorization", "Bearer " + newAccessToken);
             }
         }
         filterChain.doFilter(request, response);
+
+        System.out.println("Usuario autenticado: " + userEmail);
+        System.out.println("Autoridades: " + authorities);
     }
-}
+    }
+

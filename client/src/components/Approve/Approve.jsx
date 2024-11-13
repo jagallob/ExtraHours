@@ -47,21 +47,13 @@ export const Approve = () => {
 
   const handleApprove = async (record) => {
     try {
-      const updatedRecord = {
-        ...record,
-        salary: Number(record.salary),
-        diurnal: Number(record.diurnal),
-        nocturnal: Number(record.nocturnal),
-        diurnalHoliday: Number(record.diurnalHoliday),
-        nocturnalHoliday: Number(record.nocturnalHoliday),
-        extrasHours: Number(record.extrasHours),
-      };
-
-      const response = await postExtraHourToJSON(updatedRecord);
-
-      console.log("Respuesta de la API:", response);
-
+      await approveExtraHour(record.registry);
       message.success("Registro aprobado exitosamente");
+      setEmployeeData((prevData) =>
+        prevData.map((item) =>
+          item.registry === record.registry ? { ...item, approved: true } : item
+        )
+      );
     } catch (error) {
       message.error("Error al aprobar el registro");
     }
@@ -94,6 +86,7 @@ export const Approve = () => {
         <Button
           type="link"
           onClick={() => handleApprove(record)}
+          disabled={record.approved}
           style={{ marginRight: 8 }}
         >
           Aprobar

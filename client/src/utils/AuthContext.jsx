@@ -13,9 +13,11 @@ export const AuthProvider = ({ children }) => {
   });
 
   const login = ({ token, role }) => {
-    setAuth({ token, role });
+    const formattedRole = role.replace(/[[\]]/g, "");
+    setAuth({ token, role: formattedRole });
     localStorage.setItem("token", token);
     localStorage.setItem("role", role);
+    navigate("/menu");
   };
 
   const logout = () => {

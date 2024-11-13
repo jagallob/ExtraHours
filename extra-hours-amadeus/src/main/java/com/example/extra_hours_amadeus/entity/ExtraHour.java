@@ -22,6 +22,18 @@ public class ExtraHour {
     private Double extrasHours;
     private String observations;
 
+    @Column(nullable = false)
+    private boolean approved = false;
+
+    // getters y setters
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
     public Integer getRegistry() {
         return registry;
     }

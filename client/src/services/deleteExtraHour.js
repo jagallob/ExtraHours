@@ -4,11 +4,12 @@ export const deleteExtraHour = async (registry) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     };
 
     const response = await fetch(
-      `http://localhost:4000/extra-hour/${registry}`,
+      `http://localhost:8080/extra-hour/${registry}`,
       options
     );
 

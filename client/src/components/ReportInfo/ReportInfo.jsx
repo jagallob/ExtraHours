@@ -28,9 +28,14 @@ export const ReportInfo = () => {
         const numericIdOrRegistry = parseInt(searchValue, 10);
         employee = await findEmployee(numericIdOrRegistry);
 
-        extraHours = await findExtraHour(numericIdOrRegistry, "id");
+        extraHours = await findExtraHour(numericIdOrRegistry);
         if (!extraHours.length) {
-          extraHours = await findExtraHour(numericIdOrRegistry, "registry");
+          setError("No se encontraron registros de horas extra para este ID.");
+          setEmployeeData([]);
+        } else {
+          setEmployeeData(
+            extraHours.map((extraHour) => ({ ...employee, ...extraHour }))
+          );
         }
       } else if (selectedRange.length === 2) {
         const [startDate, endDate] = selectedRange;
@@ -38,17 +43,13 @@ export const ReportInfo = () => {
           startDate.format("YYYY-MM-DD"),
           endDate.format("YYYY-MM-DD")
         );
-      }
 
-      if (extraHours.length > 0) {
-        setEmployeeData(
-          extraHours.map((extraHour) => ({ ...employee, ...extraHour }))
-        );
-      } else {
-        setError(
-          "No se encontraron datos para los criterios de búsqueda proporcionados."
-        );
-        setEmployeeData([]);
+        if (extraHours.length > 0) {
+          setEmployeeData(extraHours);
+        } else {
+          setError("No se encontraron datos para el rango de fechas.");
+          setEmployeeData([]);
+        }
       }
     } catch (error) {
       setError("Error al buscar los datos. Por favor, intente nuevamente.");

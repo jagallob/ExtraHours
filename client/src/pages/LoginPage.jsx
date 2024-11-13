@@ -11,15 +11,16 @@ const Login = () => {
   const { auth, login } = useAuth();
 
   useEffect(() => {
+    console.log(auth);
     if (auth?.role) {
       switch (auth.role) {
-        case "empleado":
+        case "[empleado]":
           navigate("/menu");
           break;
-        case "manager":
+        case "[manager]":
           navigate("/menu");
           break;
-        case "superusuario":
+        case "[superusuario]":
           navigate("/menu");
           break;
         default:
@@ -39,6 +40,7 @@ const Login = () => {
 
       if (role) {
         login({ token, role: role });
+        navigate("/menu");
         message.success(`Bienvenido ${values.email}`);
       } else {
         message.error("No se pudo determinar el rol del usuario");
