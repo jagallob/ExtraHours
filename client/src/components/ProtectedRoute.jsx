@@ -12,7 +12,11 @@ const ProtectedRoute = ({ element, allowedRoles }) => {
     return <Navigate to="/" replace />;
   }
 
-  if (!allowedRoles.includes(auth.role)) {
+  if (
+    !allowedRoles
+      .map((role) => role.toLowerCase())
+      .includes(auth.role.toLowerCase())
+  ) {
     // Si está autenticado pero no tiene el rol permitido, redirige a una página de acceso denegado o al menú
     return <Navigate to="/menu" replace />;
   }
