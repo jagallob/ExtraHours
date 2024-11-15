@@ -13,7 +13,7 @@ const DeleteExtrahour = () => {
             <img className="logoamadeus" src={logoamadeus} alt="Logo Amadeus" />
           </Link>
         </header>
-        <h2>Actualizar - Eliminar horas extra</h2>
+        <h2>Actualizar ó Eliminar Horas Extra</h2>
         <UpdateAndDelete />
       </div>
     </>

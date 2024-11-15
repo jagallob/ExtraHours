@@ -13,7 +13,7 @@ const Settings = () => {
           {/* <h1 class="heading">Horas Extra Amadeus</h1> */}
         </a>
       </header>
-      <h2>Legislación Horas Extra</h2>
+      <h2>Parametros Horas Extra</h2>
       <div className="settings__container">
         <aside className="settings__article">
           <article>

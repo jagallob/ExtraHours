@@ -13,7 +13,7 @@ const ApproveExtrahour = () => {
           </Link>
       </header>
 
-      <h2>Aprobar - Eliminar horas extra</h2>
+      <h2>Aprobar ó Eliminar Horas Extra</h2>
       <Approve />
     </>
   );
