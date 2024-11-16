@@ -7,10 +7,8 @@ import ReportsPage from "./pages/ReportsPage";
 import ExtraHoursSettingsPage from "./pages/Settings/ExtraHoursSettingsPage";
 import { PersonalSettings } from "./components/PersonalSettings/PersonalSettings";
 import UpdateDeletePersonal from "./components/UpdateDeletePersonal/UpdateDeletePersonal";
-import ApprovePage from "./pages/ApprovePage";
 import AddExtrahour from "./pages/AddExtrahour";
-import PayExtraHoursPage from "./pages/PayExtraHoursPage";
-import DeleteExtrahour from "./pages/DeleteExtrahour";
+import UpdateDeleteApprovePage from "./pages/UpdateDeleteApprovePage";
 import { AuthProvider } from "./utils/AuthContext";
 import { ConfigProvider } from "./utils/ConfigProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -43,29 +41,11 @@ function App() {
               }
             />
             <Route
-              path="/approve-payroll"
+              path="/ManagementExtraHour"
               element={
                 <ProtectedRoute
                   allowedRoles={["manager", "superusuario"]}
-                  element={<ApprovePage />}
-                />
-              }
-            />
-            <Route
-              path="/update"
-              element={
-                <ProtectedRoute
-                  allowedRoles={["superusuario"]}
-                  element={<PayExtraHoursPage />}
-                />
-              }
-            />
-            <Route
-              path="/delete"
-              element={
-                <ProtectedRoute
-                  allowedRoles={["superusuario"]}
-                  element={<DeleteExtrahour />}
+                  element={<UpdateDeleteApprovePage />}
                 />
               }
             />
