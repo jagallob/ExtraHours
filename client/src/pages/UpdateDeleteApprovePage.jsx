@@ -12,7 +12,7 @@ const ManagementExtraHour = () => {
             <img className="logoamadeus" src={logoamadeus} alt="Logo Amadeus" />
           </Link>
         </header>
-        <h2>Actualizar ó Eliminar Horas Extra</h2>
+        <h2>Actualizar, Aprobar ó Eliminar Horas Extra</h2>
         <UpdateDeleteApprove />
       </div>
     </>
