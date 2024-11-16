@@ -40,7 +40,7 @@ const SettingsPage = () => {
               <div id="imgagregar">
                 <img src={Configuracion} alt="Engranage" />
               </div>
-              <p>Párametros Horas Extra</p>
+              <p>Parámetros Horas Extra</p>
             </div>
             <div
               className="menu-item"
