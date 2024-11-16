@@ -64,14 +64,15 @@ export const determineExtraHourType = (
     // Calcular la diferencia directamente en horas
     const hoursDiff = actualEnd.diff(current, "minutes") / 60;
 
-    // Calcular horas diurnas (de 6:00 AM a 9:00 PM)
+    // Calcular horas diurnas
     if (
       hour >= parseInt(diurnal_start.split(":")[0], 10) &&
       hour < parseInt(diurnal_end.split(":")[0], 10)
     ) {
-      if (hour === 20) {
-        // Si estamos entre las 8:00 PM y las 9:00 PM
-        const remainingMinutes = 21 * 60 - (hour * 60 + minutes); // Minutos restantes hasta las 9:00 PM
+      if (hour === parseInt(diurnal_end.split(":")[0], 10) - 1) {
+        // Si estamos en la última hora antes de que comience la franja nocturna
+        const remainingMinutes =
+          parseInt(diurnal_end.split(":")[0], 10) * 60 - (hour * 60 + minutes); // Minutos restantes hasta el final de la franja diurna
         const remainingHours = remainingMinutes / 60;
 
         handleExtraHours(isHoliday, remainingHours, false); // Sumar a diurna o festiva diurna

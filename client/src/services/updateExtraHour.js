@@ -1,15 +1,15 @@
-export const updateExtraHour = async (registry, body) => {
+export const updateExtraHour = async (registry) => {
   try {
     const options = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify(body),
     };
 
     const response = await fetch(
-      `http://localhost:4000/extra-hour/${registry}`,
+      `http://localhost:8080/extra-hour/${registry}`,
       options
     );
 
@@ -19,11 +19,9 @@ export const updateExtraHour = async (registry, body) => {
       );
     }
 
-    const data = await response.json();
-    return data;
+    return response.json();
   } catch (error) {
-    console.error("Error al actualizar la hora extra:", error);
-
+    console.error("Error al actualizar las horas extra:", error);
     throw error;
   }
 };
