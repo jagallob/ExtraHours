@@ -23,31 +23,6 @@ public class ExtraHourController {
     @Autowired
     private ExtraHourService extraHourService;
 
-
-    @GetMapping("/id/{id}")
-    public ResponseEntity<List<ExtraHour>> getExtraHoursById(@PathVariable("id") long id) {
-        List<ExtraHour> extraHours = extraHourService.findExtraHoursById(id);
-
-        if (extraHours == null) {
-            extraHours = new ArrayList<>(); // Inicializar como lista vacía si es null
-        }
-
-        return ResponseEntity.ok(extraHours);
-    }
-
-    @GetMapping("/date-range")
-    public ResponseEntity<List<ExtraHour>> getExtraHoursByDateRange(
-            @RequestParam("startDate") String startDate,
-            @RequestParam("endDate") String endDate) {
-        if (startDate == null || endDate == null) {
-            return ResponseEntity.status(400).body(null);
-        } LocalDate start = LocalDate.parse(startDate);
-        LocalDate end = LocalDate.parse(endDate);
-        List<ExtraHour> extraHours = extraHourService.findByDateRange(start, end);
-        if (extraHours.isEmpty()) { return ResponseEntity.status(404).body(null);
-        } else {
-
-
     @Autowired
     private EmployeeService employeeService;
 
@@ -89,7 +64,6 @@ public class ExtraHourController {
             return ResponseEntity.status(400).body(null);
         }
 
-    }
         LocalDate start = LocalDate.parse(startDate);
         LocalDate end = LocalDate.parse(endDate);
         List<ExtraHour> extraHours = extraHourService.findByDateRange(start, end);
