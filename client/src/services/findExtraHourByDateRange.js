@@ -20,7 +20,7 @@ export const findExtraHourByDateRange = async (startDate, endDate) => {
     }
 
     const response = await fetch(
-      `http://localhost:8080/api/extra-hour/date-range?startDate=${startDate}&endDate=${endDate}`,
+      `http://localhost:8080/api/extra-hour/date-range-with-employee?startDate=${startDate}&endDate=${endDate}`,
       {
         method: "GET",
         headers: {
@@ -36,7 +36,10 @@ export const findExtraHourByDateRange = async (startDate, endDate) => {
 
     const data = await response.json();
 
-    return data;
+    return data.map((record) => ({
+      ...record.extraHour,
+      ...record.employee,
+    }));
   } catch (error) {
     console.error("Error al buscar fecha:", error);
 
