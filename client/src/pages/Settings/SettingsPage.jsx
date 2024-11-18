@@ -40,7 +40,7 @@ const SettingsPage = () => {
               <div id="imgagregar">
                 <img src={Configuracion} alt="Engranage" />
               </div>
-              <p>Párametros Horas Extra</p>
+              <p>Parámetros Horas Extra</p>
             </div>
             <div
               className="menu-item"
@@ -54,7 +54,7 @@ const SettingsPage = () => {
               onClick={() => navigate("/settings/UpdateDeletePersonal")}
             >
               <img src={Agregar} alt="ïcono de más (+)" />
-              <p>Actualizar-Eliminar Personal</p>
+              <p>Actualizar ó Eliminar Personal</p>
             </div>
           </div>
         )}

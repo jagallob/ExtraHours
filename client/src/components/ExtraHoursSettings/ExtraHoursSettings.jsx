@@ -114,16 +114,12 @@ const ExtraHoursSettings = () => {
         </Form.Item>
 
         <Form.Item>
-<<<<<<< Updated upstream
-          <Button type="primary" htmlType="submit" loading={loading}>
-=======
           <Button
             type="primary"
             htmlType="submit"
             className="button"
             loading={loading}
           >
->>>>>>> Stashed changes
             Guardar cambios
           </Button>
         </Form.Item>

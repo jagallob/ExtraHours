@@ -49,7 +49,7 @@ const AddPersonal = () => {
     <form onSubmit={handleSubmitNewEmployee}>
       <h2>Agregar Nuevo Empleado</h2>
       <div>
-        <label htmlFor="id">id</label>
+        <label htmlFor="id">ID</label>
         <input
           type="number"
           id="id"

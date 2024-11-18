@@ -1,23 +1,22 @@
-import React from "react"; // Import React
 import { Link } from "react-router-dom"; // Import Link from React Router
-import { UpdateAndDelete } from "../components/UpdateAndDelete/UpdateAndDelete";
-import "./DeleteExtrahour.scss";
+import { UpdateDeleteApprove } from "@components/UpdateDeleteApprove/UpdateDeleteApprove";
+import "./UpdateDeleteApprovePage.scss";
 import logoamadeus from "../../../client/src/assets/images/logoamadeus.png"; // Import logo images
 
-const DeleteExtrahour = () => {
+const ManagementExtraHour = () => {
   return (
     <>
       <div>
         <header className="page__header">
-        <Link to="/menu">
+          <Link to="/menu">
             <img className="logoamadeus" src={logoamadeus} alt="Logo Amadeus" />
           </Link>
         </header>
-        <h2>Actualizar - Eliminar horas extra</h2>
-        <UpdateAndDelete />
+        <h2>Actualizar, Aprobar ó Eliminar Horas Extra</h2>
+        <UpdateDeleteApprove />
       </div>
     </>
   );
 };
 
-export default DeleteExtrahour;
+export default ManagementExtraHour;

@@ -39,14 +39,10 @@ public class SecurityConfig {
                         .requestMatchers("/superusuario/**").hasAnyAuthority("superusuario")
                         .requestMatchers("/api/employees/**").permitAll()
                         .requestMatchers("/api/logout").authenticated()
-<<<<<<< Updated upstream
                         .requestMatchers("/api/extra-hour/**").hasAnyAuthority("superusuario", "manager", "empleado" )
                         .requestMatchers("/api/employee").hasAnyAuthority("superusuario", "manager", "empleado")
-//                        .requestMatchers("/api/extra-hour").hasAnyAuthority("empleado")
-=======
                         .requestMatchers("/api/extra-hour/id/**").permitAll()
                         .requestMatchers("/api/extra-hour/date-range").hasAnyRole("manager","superusuario")
->>>>>>> Stashed changes
                         .anyRequest().authenticated())
                 .sessionManagement(manager->manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

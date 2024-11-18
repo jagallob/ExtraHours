@@ -4,10 +4,11 @@ import { findEmployee } from "@services/findEmployee";
 import { findExtraHour } from "@services/findExtraHour";
 import { updateExtraHour } from "@services/updateExtraHour";
 import { deleteExtraHour } from "../../services/deleteExtraHour";
+import { approveExtraHour } from "@services/approveExtraHour";
 import { columns as staticColumns } from "@utils/tableColumns";
-import "./UpdateAndDelete.scss";
+import "./UpdateDeleteApprove.scss";
 
-export const UpdateAndDelete = () => {
+export const UpdateDeleteApprove = () => {
   const [employeeData, setEmployeeData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -128,6 +129,20 @@ export const UpdateAndDelete = () => {
     }));
   };
 
+  const handleApprove = async (record) => {
+    try {
+      await approveExtraHour(record.registry);
+      message.success("Registro aprobado exitosamente");
+      setEmployeeData((prevData) =>
+        prevData.map((item) =>
+          item.registry === record.registry ? { ...item, approved: true } : item
+        )
+      );
+    } catch (error) {
+      message.error("Error al aprobar el registro");
+    }
+  };
+
   const actionColumn = {
     title: "Acciones",
     key: "actions",
@@ -142,6 +157,14 @@ export const UpdateAndDelete = () => {
         </Button>
         <Button type="link" onClick={() => handleDelete(record)}>
           Eliminar
+        </Button>
+        <Button
+          type="link"
+          onClick={() => handleApprove(record)}
+          disabled={record.approved}
+          style={{ marginRight: 8 }}
+        >
+          Aprobar
         </Button>
       </span>
     ),

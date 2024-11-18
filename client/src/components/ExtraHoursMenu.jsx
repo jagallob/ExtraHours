@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
 import "./ExtraHoursMenu.scss";
-import Pagar from "../assets/images/Pagar.png";
 import Agregar from "../assets/images/Agregar.png";
 import Configuracion from "../assets/images/Configuracion.png";
 import Eliminar from "../assets/images/Eliminar.png";
 import Informes from "../assets/images/Informes.png";
-import NominaAprobar from "../assets/images/NominaAprobar.png";
 
 const ExtraHoursMenu = () => {
   const navigate = useNavigate();
@@ -48,10 +46,10 @@ const ExtraHoursMenu = () => {
             </div>
             <div
               className="menu-item"
-              onClick={() => navigate("/approve-payroll")}
+              onClick={() => navigate("/ManagementExtraHour")}
             >
-              <img src={NominaAprobar} alt="Nómina - Aprobar" />
-              <p>Nómina - Aprobar</p>
+              <img src={Eliminar} alt="Eliminar" />
+              <p>Gestión Horas Extra</p>
             </div>
           </>
         );
@@ -65,24 +63,16 @@ const ExtraHoursMenu = () => {
               </div>
               <p>Agregar</p>
             </div>
-            <div className="menu-item" onClick={() => navigate("/delete")}>
+            <div
+              className="menu-item"
+              onClick={() => navigate("/ManagementExtraHour")}
+            >
               <img src={Eliminar} alt="Eliminar" />
-              <p>Actualizar - Eliminar</p>
+              <p>Gestión Horas Extra</p>
             </div>
             <div className="menu-item" onClick={() => navigate("/reports")}>
               <img src={Informes} alt="Informes" />
               <p>Informes</p>
-            </div>
-            <div
-              className="menu-item"
-              onClick={() => navigate("/approve-payroll")}
-            >
-              <img src={NominaAprobar} alt="Nómina - Aprobar" />
-              <p>Nómina - Aprobar</p>
-            </div>
-            <div className="menu-item" onClick={() => navigate("/update")}>
-              <img src={Pagar} alt="Pagar" />
-              <p>Pagar</p>
             </div>
             <div className="menu-item" onClick={() => navigate("/settings")}>
               <img src={Configuracion} alt="Configuración" />

@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,23 +20,33 @@ import java.util.Optional;
 @RequestMapping("/api/extra-hour")
 public class ExtraHourController {
 
-    private final ExtraHourService extraHourService;
-
     @Autowired
-<<<<<<< Updated upstream
-    public ExtraHourController(ExtraHourService extraHourService) {
-        this.extraHourService = extraHourService;
-    }
+    private ExtraHourService extraHourService;
+
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<List<ExtraHour>> getExtraHoursByEmployeeId(@PathVariable long id) {
-        List<ExtraHour> extraHours = extraHourService.getExtraHoursByEmployeeId(id);
+    public ResponseEntity<List<ExtraHour>> getExtraHoursById(@PathVariable("id") long id) {
+        List<ExtraHour> extraHours = extraHourService.findExtraHoursById(id);
 
-        if (extraHours.isEmpty()) {
-            return ResponseEntity.noContent().build();
+        if (extraHours == null) {
+            extraHours = new ArrayList<>(); // Inicializar como lista vacía si es null
+        }
+
+        return ResponseEntity.ok(extraHours);
+    }
+
+    @GetMapping("/date-range")
+    public ResponseEntity<List<ExtraHour>> getExtraHoursByDateRange(
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate) {
+        if (startDate == null || endDate == null) {
+            return ResponseEntity.status(400).body(null);
+        } LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+        List<ExtraHour> extraHours = extraHourService.findByDateRange(start, end);
+        if (extraHours.isEmpty()) { return ResponseEntity.status(404).body(null);
         } else {
-=======
-    private ExtraHourService extraHourService;
+
 
     @Autowired
     private EmployeeService employeeService;
@@ -65,7 +77,6 @@ public class ExtraHourController {
             return ResponseEntity.status(404).body(null);
         }
 
->>>>>>> Stashed changes
             return ResponseEntity.ok(extraHours);
     }
 
@@ -77,16 +88,14 @@ public class ExtraHourController {
         if (startDate == null || endDate == null) {
             return ResponseEntity.status(400).body(null);
         }
-<<<<<<< Updated upstream
+
     }
-=======
         LocalDate start = LocalDate.parse(startDate);
         LocalDate end = LocalDate.parse(endDate);
         List<ExtraHour> extraHours = extraHourService.findByDateRange(start, end);
         if (extraHours.isEmpty()) {
             return ResponseEntity.status(404).body(null);
         }
->>>>>>> Stashed changes
 
         List<ExtraHourWithEmployee> result = new ArrayList<>();
         for (ExtraHour extraHour : extraHours) {
@@ -99,7 +108,6 @@ public class ExtraHourController {
 
         return ResponseEntity.ok(result);
     }
-
 
     @Autowired
     private ExtraHourRepository extraHourRepository;

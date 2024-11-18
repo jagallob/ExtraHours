@@ -44,14 +44,9 @@ export const ReportInfo = () => {
         const numericIdOrRegistry = parseInt(searchValue, 10);
         employee = await findEmployee(numericIdOrRegistry);
 
-        extraHours = await findExtraHour(numericIdOrRegistry);
+        extraHours = await findExtraHour(numericIdOrRegistry, "id");
         if (!extraHours.length) {
-          setError("No se encontraron registros de horas extra para este ID.");
-          setEmployeeData([]);
-        } else {
-          setEmployeeData(
-            extraHours.map((extraHour) => ({ ...employee, ...extraHour }))
-          );
+          extraHours = await findExtraHour(numericIdOrRegistry, "registry");
         }
       } else if (selectedRange.length === 2 && role !== "empleado") {
         const [startDate, endDate] = selectedRange;
@@ -59,22 +54,22 @@ export const ReportInfo = () => {
           startDate.format("YYYY-MM-DD"),
           endDate.format("YYYY-MM-DD")
         );
-<<<<<<< Updated upstream
-=======
       } else {
         setError("No tienes permiso para buscar por rango de fechas.");
         setEmployeeData([]);
         setLoading(false);
         return;
       }
->>>>>>> Stashed changes
 
-        if (extraHours.length > 0) {
-          setEmployeeData(extraHours);
-        } else {
-          setError("No se encontraron datos para el rango de fechas.");
-          setEmployeeData([]);
-        }
+      if (extraHours.length > 0) {
+        setEmployeeData(
+          extraHours.map((extraHour) => ({ ...employee, ...extraHour }))
+        );
+      } else {
+        setError(
+          "No se encontraron datos para los criterios de búsqueda proporcionados."
+        );
+        setEmployeeData([]);
       }
     } catch (error) {
       setError("Error al buscar los datos. Por favor, intente nuevamente.");
@@ -140,7 +135,7 @@ export const ReportInfo = () => {
       <div className="filters-container">
         <div className="search-container">
           <Input.Search
-            placeholder="Ingrese ID del empleado"
+            placeholder="Ingrese ID o Registro de Hora Extra"
             onSearch={handleSearch}
             onChange={(e) => setSearchValue(e.target.value)}
             value={searchValue}
