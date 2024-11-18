@@ -1,7 +1,10 @@
 package com.example.extra_hours_amadeus.controller;
 
+import com.example.extra_hours_amadeus.entity.Employee;
 import com.example.extra_hours_amadeus.entity.ExtraHour;
+import com.example.extra_hours_amadeus.dto.ExtraHourWithEmployee;
 import com.example.extra_hours_amadeus.repository.ExtraHourRepository;
+import com.example.extra_hours_amadeus.service.EmployeeService;
 import com.example.extra_hours_amadeus.service.ExtraHourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +21,7 @@ public class ExtraHourController {
     private final ExtraHourService extraHourService;
 
     @Autowired
+<<<<<<< Updated upstream
     public ExtraHourController(ExtraHourService extraHourService) {
         this.extraHourService = extraHourService;
     }
@@ -29,9 +33,73 @@ public class ExtraHourController {
         if (extraHours.isEmpty()) {
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.ok(extraHours);
+=======
+    private ExtraHourService extraHourService;
+
+    @Autowired
+    private EmployeeService employeeService;
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<List<ExtraHour>> getExtraHoursById(@PathVariable("id") long id) {
+        List<ExtraHour> extraHours = extraHourService.findExtraHoursById(id);
+
+        if (extraHours == null) {
+            extraHours = new ArrayList<>(); // Inicializar como lista vacía si es null
         }
+
+        return ResponseEntity.ok(extraHours);
     }
+
+    @GetMapping("/date-range")
+    @PreAuthorize("hasAnyRole('manager', 'superusuario')")
+    public ResponseEntity<List<ExtraHour>> getExtraHoursByDateRange(
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate) {
+        if (startDate == null || endDate == null) {
+            return ResponseEntity.status(400).body(null);
+        }
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+        List<ExtraHour> extraHours = extraHourService.findByDateRange(start, end);
+        if (extraHours.isEmpty()) {
+            return ResponseEntity.status(404).body(null);
+        }
+
+>>>>>>> Stashed changes
+            return ResponseEntity.ok(extraHours);
+    }
+
+    @GetMapping("/date-range-with-employee")
+    @PreAuthorize("hasAnyRole('manager', 'superusuario')")
+    public ResponseEntity<List<ExtraHourWithEmployee>> getExtraHoursByDateRangeWithEmployee(
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate) {
+        if (startDate == null || endDate == null) {
+            return ResponseEntity.status(400).body(null);
+        }
+<<<<<<< Updated upstream
+    }
+=======
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+        List<ExtraHour> extraHours = extraHourService.findByDateRange(start, end);
+        if (extraHours.isEmpty()) {
+            return ResponseEntity.status(404).body(null);
+        }
+>>>>>>> Stashed changes
+
+        List<ExtraHourWithEmployee> result = new ArrayList<>();
+        for (ExtraHour extraHour : extraHours) {
+            Optional<Employee> employeeOptional = employeeService.findById(extraHour.getId());
+            if (employeeOptional.isPresent()) {
+                Employee employee = employeeOptional.get();
+                result.add(new ExtraHourWithEmployee(extraHour, employee));
+            }
+        }
+
+        return ResponseEntity.ok(result);
+    }
+
 
     @Autowired
     private ExtraHourRepository extraHourRepository;

@@ -5,7 +5,6 @@ import { updateConfig } from "../../services/updateConfig";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-// import PropTypes from "prop-types";
 import "./ExtraHoursSettings.scss";
 
 dayjs.extend(customParseFormat);
@@ -28,7 +27,11 @@ const ExtraHoursSettings = () => {
       setConfig(updatedConfig);
       message.success("Configuración actualizada correctamente");
     } catch (error) {
-      message.error("Error al actualizar la configuración");
+      if (error.response && error.response.status === 400) {
+        message.error(error.response.data); // Mostrar mensaje del backend si excede el límite
+      } else {
+        message.error("Error al actualizar la configuración");
+      }
     } finally {
       setLoading(false);
     }
@@ -49,8 +52,19 @@ const ExtraHoursSettings = () => {
           ...config,
           diurnal_start: dayjs(config.diurnal_start, "HH:mm"),
           diurnal_end: dayjs(config.diurnal_end, "HH:mm"),
+          weekly_extra_hours_limit: config.weekly_extra_hours_limit,
         }}
       >
+        <Form.Item
+          label="Límite de horas extra semanales"
+          name="weekly_extra_hours_limit"
+          rules={[
+            { required: true, message: "Por favor, ingresa un límite válido." },
+          ]}
+        >
+          <InputNumber min={1} step={1} />
+        </Form.Item>
+
         <Form.Item
           label="Multiplicador Hora Diurna"
           name="diurnal_multiplier"
@@ -100,7 +114,16 @@ const ExtraHoursSettings = () => {
         </Form.Item>
 
         <Form.Item>
+<<<<<<< Updated upstream
           <Button type="primary" htmlType="submit" loading={loading}>
+=======
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="button"
+            loading={loading}
+          >
+>>>>>>> Stashed changes
             Guardar cambios
           </Button>
         </Form.Item>
@@ -108,9 +131,5 @@ const ExtraHoursSettings = () => {
     </div>
   );
 };
-
-// // ExtraHoursSettings.propTypes = {
-// //   onUpdateConfig: PropTypes.func.isRequired, // Define que debe ser una función y que es requerida
-// };
 
 export default ExtraHoursSettings;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input, Table, DatePicker } from "antd";
 import { findEmployee } from "@services/findEmployee";
 import { findExtraHour } from "@services/findExtraHour";
@@ -15,8 +15,24 @@ export const ReportInfo = () => {
   const [error, setError] = useState(null);
   const [selectedRange, setSelectedRange] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [role, setRole] = useState(null);
+
+  useEffect(() => {
+    const userRole = localStorage.getItem("role");
+    if (userRole) {
+      const roleWithoutBrackets = userRole.replace(/[[\]]/g, "");
+      console.log("Rol del usuario almacenado:", roleWithoutBrackets);
+      setRole(roleWithoutBrackets.trim()); // Asegúrate de eliminar espacios adicionales
+    } else {
+      console.log("No se encontró el rol del usuario en localStorage.");
+    }
+  }, []);
 
   const handleSearch = async () => {
+    if (role === "empleado" && selectedRange.length === 2) {
+      setError("No tienes permiso para buscar por rango de fechas.");
+      return;
+    }
     setLoading(true);
     setError(null);
 
@@ -37,12 +53,21 @@ export const ReportInfo = () => {
             extraHours.map((extraHour) => ({ ...employee, ...extraHour }))
           );
         }
-      } else if (selectedRange.length === 2) {
+      } else if (selectedRange.length === 2 && role !== "empleado") {
         const [startDate, endDate] = selectedRange;
         extraHours = await findExtraHourByDateRange(
           startDate.format("YYYY-MM-DD"),
           endDate.format("YYYY-MM-DD")
         );
+<<<<<<< Updated upstream
+=======
+      } else {
+        setError("No tienes permiso para buscar por rango de fechas.");
+        setEmployeeData([]);
+        setLoading(false);
+        return;
+      }
+>>>>>>> Stashed changes
 
         if (extraHours.length > 0) {
           setEmployeeData(extraHours);
@@ -122,10 +147,14 @@ export const ReportInfo = () => {
           />
         </div>
         <div className="range-picker-container">
-          <RangePicker onChange={(dates) => setSelectedRange(dates)} />
-          <button onClick={handleSearch} style={{ marginLeft: 10 }}>
-            Buscar
-          </button>
+          {role !== "empleado" && (
+            <RangePicker onChange={(dates) => setSelectedRange(dates)} />
+          )}
+          {role !== "empleado" && (
+            <button onClick={handleSearch} style={{ marginLeft: 10 }}>
+              Buscar
+            </button>
+          )}
         </div>
       </div>
 
