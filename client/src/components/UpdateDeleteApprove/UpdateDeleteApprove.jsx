@@ -6,6 +6,7 @@ import { updateExtraHour } from "@services/updateExtraHour";
 import { deleteExtraHour } from "../../services/deleteExtraHour";
 import { approveExtraHour } from "@services/approveExtraHour";
 import { columns as staticColumns } from "@utils/tableColumns";
+import { useConfig } from "../../utils/ConfigProvider";
 import "./UpdateDeleteApprove.scss";
 
 export const UpdateDeleteApprove = () => {
@@ -14,6 +15,21 @@ export const UpdateDeleteApprove = () => {
   const [error, setError] = useState(null);
   const [selectedRow, setSelectedRow] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const { config } = useConfig();
+  const weeklyLimit = config?.weekly_extra_hours_limit;
+
+  // Función para calcular el total de horas extras semanales
+  const calculateWeeklyExtraHours = (extraHours) => {
+    return extraHours.reduce(
+      (total, record) =>
+        total +
+        (Number(record.diurnal || 0) +
+          Number(record.nocturnal || 0) +
+          Number(record.diurnalHoliday || 0) +
+          Number(record.nocturnalHoliday || 0)),
+      0
+    );
+  };
 
   const handleSearch = async (idOrRegistry) => {
     const numericIdOrRegistry = parseInt(idOrRegistry, 10);
@@ -24,20 +40,44 @@ export const UpdateDeleteApprove = () => {
       const employee = await findEmployee(numericIdOrRegistry);
       const extraHours = await findExtraHour(numericIdOrRegistry, "id");
 
-      if (!extraHours.length) {
+      let combinedData = [];
+      if (extraHours.length > 0) {
+        combinedData = extraHours.map((extraHour) => ({
+          ...extraHour,
+          ...employee,
+        }));
+      } else {
         const extraHourByRegistry = await findExtraHour(
           numericIdOrRegistry,
           "registry"
         );
-        setEmployeeData(
-          extraHourByRegistry.map((extraHour) => ({
-            ...extraHour,
-            ...employee,
-          }))
+        combinedData = extraHourByRegistry.map((extraHour) => ({
+          ...extraHour,
+          ...employee,
+        }));
+      }
+
+      setEmployeeData(combinedData);
+
+      // Calcular horas semanales
+      const weeklyTotal = calculateWeeklyExtraHours(combinedData);
+
+      // Mostrar mensaje según el total de horas
+      if (weeklyTotal > weeklyLimit) {
+        message.error(
+          `⚠️ El empleado ${
+            employee.name
+          } ha superado el límite semanal con un total de ${weeklyTotal.toFixed(
+            2
+          )} horas extras.`
         );
-      } else {
-        setEmployeeData(
-          extraHours.map((extraHour) => ({ ...extraHour, ...employee }))
+      } else if (weeklyTotal >= weeklyLimit * 0.9) {
+        message.warning(
+          `El empleado ${
+            employee.name
+          } está cerca del límite semanal con un total de ${weeklyTotal.toFixed(
+            2
+          )} horas extras.`
         );
       }
     } catch (error) {
@@ -45,6 +85,53 @@ export const UpdateDeleteApprove = () => {
       setEmployeeData([]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleApprove = async (record) => {
+    try {
+      console.log("Aprobando registro:", record.registry);
+
+      // Llamada a la API para aprobar
+      const response = await approveExtraHour(record.registry);
+      console.log("Respuesta de la API:", response);
+
+      // Actualizar el estado local
+      setEmployeeData((prevData) =>
+        prevData.map((item) =>
+          item.registry === record.registry ? { ...item, approved: true } : item
+        )
+      );
+
+      // Calcular total de horas extras semanales del empleado
+      const totalExtraHours = employeeData
+        .filter((item) => item.id === record.id) // Filtra registros del mismo empleado
+        .reduce((sum, item) => sum + item.extrasHours, 0);
+      // Suma las horas extras
+
+      // Mostrar mensajes según el total de horas extras
+      if (totalExtraHours > weeklyLimit) {
+        message.warning(
+          `⚠️ El empleado ${
+            record.name
+          } ha superado el límite semanal con un total de ${totalExtraHours.toFixed(
+            2
+          )} horas extras.`
+        );
+      } else if (totalExtraHours >= weeklyLimit - 2) {
+        message.info(
+          `El empleado ${
+            record.name
+          } está cerca del límite semanal con un total de ${totalExtraHours.toFixed(
+            2
+          )} horas extras.`
+        );
+      } else {
+        message.success("Registro aprobado exitosamente");
+      }
+    } catch (error) {
+      console.error("Error al aprobar el registro:", error);
+      message.error("Error al aprobar el registro");
     }
   };
 
@@ -127,20 +214,6 @@ export const UpdateDeleteApprove = () => {
       ...prev,
       extrasHours: totalExtraHours,
     }));
-  };
-
-  const handleApprove = async (record) => {
-    try {
-      await approveExtraHour(record.registry);
-      message.success("Registro aprobado exitosamente");
-      setEmployeeData((prevData) =>
-        prevData.map((item) =>
-          item.registry === record.registry ? { ...item, approved: true } : item
-        )
-      );
-    } catch (error) {
-      message.error("Error al aprobar el registro");
-    }
   };
 
   const actionColumn = {
