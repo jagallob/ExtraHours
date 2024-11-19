@@ -4,7 +4,7 @@ import { findEmployee } from "@services/findEmployee";
 import { findExtraHour } from "@services/findExtraHour";
 import { findExtraHourByDateRange } from "@services/findExtraHourByDateRange";
 import ExcelJS from "exceljs";
-import { columns } from "@utils/tableColumns";
+import { columns } from "@utils/tableColumns.jsx";
 import "./ReportInfo.scss";
 
 const { RangePicker } = DatePicker;
@@ -115,10 +115,11 @@ export const ReportInfo = () => {
         { header: "Total Horas Extras", key: "extrasHours", width: 20 },
         { header: "Observaciones", key: "observations", width: 30 },
         { header: "Registro", key: "registry", width: 15 },
+        { header: "Aprobado", key: "approved", width: 10 },
       ];
 
       data.forEach((task) => {
-        worksheet.addRow(task);
+        worksheet.addRow({ ...task, approved: task.approved ? "Sí" : "No" });
       });
 
       worksheet.getRow(1).font = { bold: true };

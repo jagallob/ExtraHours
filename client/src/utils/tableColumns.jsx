@@ -64,4 +64,15 @@ export const columns = [
     dataIndex: "registry",
     key: "registry",
   },
+  {
+    title: "Aprobado",
+    dataIndex: "approved",
+    key: "approved",
+    width: 100,
+    render: (approved) => (
+      <span style={{ color: approved ? "green" : "red" }}>
+        {approved ? "Sí" : "No"}
+      </span>
+    ),
+  },
 ];
