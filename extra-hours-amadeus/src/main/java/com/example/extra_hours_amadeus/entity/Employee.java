@@ -1,69 +1,33 @@
 package com.example.extra_hours_amadeus.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "employees")
 public class Employee {
 
     @Id
     @Column(name = "id", nullable = false)
-    private Long   id;
+    private Long id;
     private String name;
     private String position;
     private Double salary;
     private String manager;
 
-    @Column(name = "managerId", nullable = false)
-    private int managerId;
+    @Column(name = "manager_id", nullable = false)
+    private int manager_id;
 
-    // Getters y Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public Employee(Long id, String name, String position, Double salary, String manager, Integer manager_id) {
         this.id = id;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
         this.position = position;
-    }
-
-    public Double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Double salary) {
         this.salary = salary;
-    }
-
-    public String getManager() {
-        return manager;
-    }
-
-    public void setManager(String manager) {
         this.manager = manager;
+        this.manager_id = manager_id;
     }
 
-    public int getManagerId() {
-        return managerId;
-    }
+    public Employee() {}
 
-    public void setManagerId(int managerId) {
-        this.managerId = managerId;
-    }
 }

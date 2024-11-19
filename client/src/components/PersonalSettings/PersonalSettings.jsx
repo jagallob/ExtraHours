@@ -8,7 +8,9 @@ export const PersonalSettings = () => {
     position: "",
     salary: "",
     manager: "",
-    managerId: "",
+    manager_id: "",
+    email: "",
+    role: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -16,10 +18,18 @@ export const PersonalSettings = () => {
 
   const handleEmployeeChange = (e) => {
     const { name, value } = e.target;
-    setNewEmployee((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setNewEmployee((prevData) => {
+      const email =
+        name === "name"
+          ? `${value.toLowerCase().replace(/ /g, ".")}@empresa.com`
+          : prevData.email;
+      const username =
+        name === "name"
+          ? value.toLowerCase().replace(/ /g, ".")
+          : prevData.username;
+
+      return { ...prevData, [name]: value, email, username };
+    });
   };
 
   const handleSubmitNewEmployee = async (e) => {
@@ -36,7 +46,9 @@ export const PersonalSettings = () => {
         position: "",
         salary: "",
         manager: "",
-        managerId: "",
+        manager_id: "",
+        email: "",
+        role: "",
       });
     } catch (error) {
       setError(error.message);
@@ -104,15 +116,38 @@ export const PersonalSettings = () => {
         />
       </div>
       <div>
-        <label htmlFor="managerId">Manager ID</label>
+        <label htmlFor="manager_id">Manager ID</label>
         <input
           type="number"
-          id="managerId"
-          name="managerId"
-          value={newEmployee.managerId}
+          id="manager_id"
+          name="manager_id"
+          value={newEmployee.manager_id}
           onChange={handleEmployeeChange}
           required
         />
+      </div>
+      <div>
+        <label htmlFor="email">Email</label>
+        <input
+          type="text"
+          id="email"
+          name="email"
+          value={newEmployee.email}
+          readOnly
+        />
+      </div>
+      <div>
+        <label htmlFor="role">Rol</label>
+        <select
+          id="role"
+          name="role"
+          value={newEmployee.role}
+          onChange={handleEmployeeChange}
+        >
+          <option value="empleado">Empleado</option>
+          <option value="manager">Manager</option>
+          <option value="superusuario">Superusuario</option>
+        </select>
       </div>
       <button type="submit" disabled={loading}>
         {loading ? "Agregando..." : "Agregar Empleado"}
