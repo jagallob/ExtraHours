@@ -16,13 +16,24 @@ import java.util.List;
 public class Users implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String email;
     private String name;
     private String password;
     private String role;
     private String username;
+
+    public Users(Long id, String email, String name, String password, String role, String username) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.username = username;
+
+    }
+
+    public Users() {}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -87,7 +87,7 @@ const UpdateDeletePersonal = () => {
     //   key: "manager",
     // },
     {
-      title: "ManagerId",
+      title: "Manager_id",
       dataIndex: "manager_id",
       key: "id",
     },
