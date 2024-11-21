@@ -58,8 +58,15 @@ h1 {
   font-family: sans-serif;
 }
 
-.logout-button {
-  margin-top: 18px;
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  margin: 20px auto;
+}
+
+.logout-button,
+.change-password-button {
   padding: 8px 18px;
   background-color: #fbfafa;
   color: #050505;
@@ -67,8 +74,10 @@ h1 {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
-.logout-button:hover {
+.logout-button:hover,
+.change-password-button:hover {
   background-color: #a4a4a4;
 }

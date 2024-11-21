@@ -1,9 +1,11 @@
 package com.example.extra_hours_amadeus.controller;
 
+import com.example.extra_hours_amadeus.dto.ChangePasswordRequest;
 import com.example.extra_hours_amadeus.dto.ReqRes;
 import com.example.extra_hours_amadeus.entity.Users;
 import com.example.extra_hours_amadeus.service.UsersManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +27,18 @@ public class UserManagementController {
     public ResponseEntity<ReqRes> login(@RequestBody ReqRes req) {
         return ResponseEntity.ok(usersManagementService.login(req));
     }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<String> changePassword(@RequestParam Long id,  @RequestParam String newPassword) {
+
+        try {
+            usersManagementService.changePassword(id, newPassword);
+            return ResponseEntity.ok("Contraseña cambiada exitosamente.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
     @PostMapping("/auth/refresh")
     public ResponseEntity<ReqRes> refreshToken(@RequestBody ReqRes req) {
