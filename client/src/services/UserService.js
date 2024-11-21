@@ -21,6 +21,32 @@ export const UserService = {
       throw error;
     }
   },
+
+  changePassword: async (id, newPassword) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        "http://localhost:8080/auth/change-password",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ id, newPassword }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+
+      return await response.text();
+    } catch (error) {
+      console.error("Change password error:", error);
+      throw error;
+    }
+  },
 };
 
 export const logout = async () => {

@@ -79,6 +79,18 @@ public class UsersManagementService {
         return response;
     }
 
+    public void changePassword(Long id, String newPassword) {
+        Users user = usersRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + id));
+
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+
+        usersRepo.save(user);
+    }
+
+
+
     public ReqRes refreshToken(ReqRes refreshTokenRequest)
     {
         ReqRes response = new ReqRes();

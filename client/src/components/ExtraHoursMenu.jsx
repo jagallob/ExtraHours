@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
+import ChangePasswordModal from "../components/ChangePasswordModal/ChangePasswordModal";
 import "./ExtraHoursMenu.scss";
 import Agregar from "../assets/images/Agregar.png";
 import Configuracion from "../assets/images/Configuracion.png";
@@ -9,6 +11,10 @@ import Informes from "../assets/images/Informes.png";
 const ExtraHoursMenu = () => {
   const navigate = useNavigate();
   const { auth, logout } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const handleLogout = async () => {
     try {
@@ -90,9 +96,15 @@ const ExtraHoursMenu = () => {
       <div className="menu">
         <h1>Horas extra Amadeus</h1>
         <div className="grid">{renderMenuItems()}</div>
-        <button className="logout-button" onClick={handleLogout}>
-          Cerrar Sesión
-        </button>
+        <div className="button-container">
+          <button className="logout-button" onClick={handleLogout}>
+            Cerrar Sesión
+          </button>
+          <button className="change-password-button" onClick={openModal}>
+            Cambiar Contraseña
+          </button>
+        </div>
+        {isModalOpen && <ChangePasswordModal onClose={closeModal} />}
       </div>
     </div>
   );

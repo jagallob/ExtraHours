@@ -20,7 +20,7 @@ public class JWTUtils {
 
     private final SecretKey key;
     private static final long ACCESS_TOKEN_EXPIRATION = 1814400000;  // 21 days
-    private static final long REFRESH_TOKEN_EXPIRATION = 604800000;  // 7 days
+    private static final long REFRESH_TOKEN_EXPIRATION = 1814400000;  // 21 days
 
     public JWTUtils() {
         String secretString = "843567893696976453275974432697R634976R738467TR678T34865R6834R8763T478378637664538745673865783678548735687R3";
