@@ -15,6 +15,11 @@ export const UserService = {
       }
 
       const data = await response.json();
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("id", data.id);
+      localStorage.setItem("role", data.role);
+
       return data;
     } catch (error) {
       console.error("Login error:", error);
@@ -22,18 +27,24 @@ export const UserService = {
     }
   },
 
-  changePassword: async (id, newPassword) => {
+  changePassword: async (currentPassword, newPassword) => {
     try {
       const token = localStorage.getItem("token");
+      const id = localStorage.getItem("id");
+
+      if (!id) {
+        throw new Error("ID del usuario no encontrado");
+      }
+
       const response = await fetch(
-        "http://localhost:8080/auth/change-password",
+        `http://localhost:8080/auth/change-password?id=${id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ id, newPassword }),
+          body: JSON.stringify({ currentPassword, newPassword }),
         }
       );
 

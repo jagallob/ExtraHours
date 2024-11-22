@@ -11,8 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
-//@RequestMapping("/api")
+@RequestMapping("/auth")
 public class UserManagementController {
 
     @Autowired
@@ -23,21 +25,29 @@ public class UserManagementController {
         return ResponseEntity.ok(usersManagementService.register(reg));
     }
 
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     public ResponseEntity<ReqRes> login(@RequestBody ReqRes req) {
         return ResponseEntity.ok(usersManagementService.login(req));
     }
 
     @PutMapping("/change-password")
-    public ResponseEntity<String> changePassword(@RequestParam Long id,  @RequestParam String newPassword) {
+    public ResponseEntity<String> changePassword(  @RequestParam("id") Long id, @RequestBody ChangePasswordRequest request) {
+
+        System.out.println("Request recibido: " + request);
+        System.out.println("ID recibido: " + id);
 
         try {
-            usersManagementService.changePassword(id, newPassword);
+            request.setId(id);
+
+            System.out.println("Request después de asignar el ID: " + request);
+
+            usersManagementService.changePassword(request);
             return ResponseEntity.ok("Contraseña cambiada exitosamente.");
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
 
     @PostMapping("/auth/refresh")
@@ -51,12 +61,12 @@ public class UserManagementController {
     }
 
     @GetMapping("/superusuario/get-user/{userId}")
-    public ResponseEntity<ReqRes> getUserById(@PathVariable Integer userId) {
+    public ResponseEntity<ReqRes> getUserById(@PathVariable Long userId) {
         return ResponseEntity.ok(usersManagementService.getUsersById(userId));
     }
 
     @PutMapping("/superusuario/update/{userId}")
-    public ResponseEntity<ReqRes> updateUser(@PathVariable Integer userId, @RequestBody Users reqres) {
+    public ResponseEntity<ReqRes> updateUser(@PathVariable Long userId, @RequestBody Users reqres) {
         return ResponseEntity.ok(usersManagementService.updateUser(userId, reqres));
     }
 
@@ -69,7 +79,7 @@ public class UserManagementController {
     }
 
     @DeleteMapping("/superusuario/delete/{userId}")
-    public ResponseEntity<ReqRes> deleteUser(@PathVariable Integer userId) {
+    public ResponseEntity<ReqRes> deleteUser(@PathVariable Long userId) {
         return ResponseEntity.ok(usersManagementService.deleteUser(userId));
     }
 }

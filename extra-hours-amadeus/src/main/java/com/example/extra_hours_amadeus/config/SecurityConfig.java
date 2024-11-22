@@ -39,6 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/superusuario/**").hasAnyAuthority("superusuario")
                         .requestMatchers("/api/employee/**").permitAll()
                         .requestMatchers("/api/logout").authenticated()
+                        .requestMatchers("/auth/change-password").authenticated()
                         .requestMatchers("/api/extra-hour/**").hasAnyAuthority("superusuario", "manager", "empleado" )
                         .requestMatchers("/api/extra-hour/id/**").permitAll()
                         .requestMatchers("/api/extra-hour/date-range").hasAnyRole("manager","superusuario")
