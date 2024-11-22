@@ -1,6 +1,7 @@
 package com.example.extra_hours_amadeus.service;
 
 
+import com.example.extra_hours_amadeus.dto.ChangePasswordRequest;
 import com.example.extra_hours_amadeus.dto.ReqRes;
 import com.example.extra_hours_amadeus.entity.Users;
 import com.example.extra_hours_amadeus.repository.UsersRepo;
@@ -9,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,12 @@ public class UsersManagementService {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
+
+    public boolean verifyCurrentPassword(Long id, String currentPassword) {
+        Users user = usersRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        return passwordEncoder.matches(currentPassword, user.getPassword());
+    }
 
 
     public ReqRes register(ReqRes registrationRequest){
@@ -60,8 +67,11 @@ public class UsersManagementService {
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getEmail(), loginRequest.getPassword()));
 
-            UserDetails user = usersRepo.findByEmail(loginRequest.getEmail())
+            Users dbUser = usersRepo.findByEmail(loginRequest.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+            UserDetails user = new org.springframework.security.core.userdetails.User(
+                    dbUser.getEmail(), dbUser.getPassword(), dbUser.getAuthorities());
 
             var jwt = jwtUtils.generateToken(user);
             var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
@@ -72,6 +82,7 @@ public class UsersManagementService {
             response.setRefreshToken(refreshToken);
             response.setExpirationTime("24Hrs");
             response.setMessage("Successfully Logged In");
+            response.setId(dbUser.getId());
         } catch (Exception e) {
             response.setStatusCode(401);
             response.setMessage("Login failed: " + e.getMessage());
@@ -79,17 +90,17 @@ public class UsersManagementService {
         return response;
     }
 
-    public void changePassword(Long id, String newPassword) {
-        Users user = usersRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + id));
+    public void changePassword(ChangePasswordRequest request) throws Exception {
+        Users user = usersRepo.findById(request.getId())
+                .orElseThrow(() -> new Exception("User not found"));
 
-        String encodedPassword = passwordEncoder.encode(newPassword);
-        user.setPassword(encodedPassword);
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+            throw new Exception("La contraseña actual es incorrecta.");
+        }
 
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         usersRepo.save(user);
     }
-
-
 
     public ReqRes refreshToken(ReqRes refreshTokenRequest)
     {
@@ -137,7 +148,7 @@ public class UsersManagementService {
     }
 
 
-    public ReqRes getUsersById(Integer id) {
+    public ReqRes getUsersById(Long id) {
         ReqRes reqRes = new ReqRes();
         try {
             Users usersById = usersRepo.findById(id).orElseThrow(() -> new RuntimeException("User Not found"));
@@ -152,7 +163,7 @@ public class UsersManagementService {
     }
 
 
-    public ReqRes deleteUser(Integer userId) {
+    public ReqRes deleteUser(Long userId) {
         ReqRes reqRes = new ReqRes();
         try {
             Optional<Users> userOptional = usersRepo.findById(userId);
@@ -171,7 +182,7 @@ public class UsersManagementService {
         return reqRes;
     }
 
-    public ReqRes updateUser(Integer userId, Users updatedUser) {
+    public ReqRes updateUser(Long userId, Users updatedUser) {
         ReqRes reqRes = new ReqRes();
         try {
             Optional<Users> userOptional = usersRepo.findById(userId);

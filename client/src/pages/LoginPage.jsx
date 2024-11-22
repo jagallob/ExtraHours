@@ -13,20 +13,7 @@ const Login = () => {
   useEffect(() => {
     console.log(auth);
     if (auth?.role) {
-      switch (auth.role) {
-        case "[empleado]":
-          navigate("/menu");
-          break;
-        case "[manager]":
-          navigate("/menu");
-          break;
-        case "[superusuario]":
-          navigate("/menu");
-          break;
-        default:
-          navigate("/"); // Página por defecto si no coincide con ningún rol
-          break;
-      }
+      navigate("/menu");
     }
   }, [auth, navigate]);
 
