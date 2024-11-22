@@ -16,16 +16,17 @@ public class Employee {
     private Double salary;
     private String manager;
 
-    @Column(name = "manager_id", nullable = false)
-    private int manager_id;
 
-    public Employee(Long id, String name, String position, Double salary, String manager, Integer manager_id) {
+    @Column(name = "manager_id", nullable = false)
+    private int managerId;
+
+    public Employee(Long id, String name, String position, Double salary, String manager, Manager manager_id) {
         this.id = id;
         this.name = name;
         this.position = position;
         this.salary = salary;
         this.manager = manager;
-        this.manager_id = manager_id;
+        this.managerId= managerId;
     }
 
     public Employee() {}

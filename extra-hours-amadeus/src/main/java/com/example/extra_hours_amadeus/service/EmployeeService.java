@@ -1,6 +1,7 @@
 package com.example.extra_hours_amadeus.service;
 
 import com.example.extra_hours_amadeus.entity.Employee;
+import com.example.extra_hours_amadeus.entity.Manager;
 import com.example.extra_hours_amadeus.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,10 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    public List<Employee> getEmployeesByManagerId(int managerId) {
+        return employeeRepository.findByManagerId(managerId);
+    }
 
     public Optional<Employee> findById(Long id) {
         return employeeRepository.findById(id);
@@ -34,7 +39,7 @@ public class EmployeeService {
             employee.setName(employeeDetails.getName());
             employee.setPosition(employeeDetails.getPosition());
             employee.setSalary(employeeDetails.getSalary());
-            employee.setManager_id(employeeDetails.getManager_id());
+            employee.setManagerId(employeeDetails.getManagerId());
             employee.setManager(employeeDetails.getManager());
 
             return employeeRepository.save(employee);

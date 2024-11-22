@@ -1,5 +1,6 @@
 package com.example.extra_hours_amadeus.dto;
 
+import com.example.extra_hours_amadeus.entity.Manager;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -13,7 +14,7 @@ public class EmployeeWithUserDTO {
     private String position;
     private Double salary;
     private String manager;
-    private Integer manager_id;
+    private Manager manager_id;
     private String email;
     private String password;
     private String role;
