@@ -2,14 +2,18 @@ package com.example.extra_hours_amadeus.controller;
 
 import com.example.extra_hours_amadeus.dto.EmployeeWithUserDTO;
 import com.example.extra_hours_amadeus.entity.Employee;
+import com.example.extra_hours_amadeus.entity.Manager;
 import com.example.extra_hours_amadeus.entity.Users;
 import com.example.extra_hours_amadeus.repository.UsersRepo;
 import com.example.extra_hours_amadeus.service.EmployeeService;
+import com.example.extra_hours_amadeus.service.JWTUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,9 +34,26 @@ public class EmployeeController {
     @Autowired
     private UsersRepo usersRepo;
 
+    @Autowired
+    private final JWTUtils jwtUtils;
+
+    public EmployeeController(JWTUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
+
+    @GetMapping("/manager/{manager_id}")
+    public ResponseEntity<List<Employee>> getEmployeesByManager(@PathVariable int managerId, @RequestHeader("Authorization") String token) {
+        int tokenManagerId = jwtUtils.getManagerIdFromToken(token);
+        if (tokenManagerId != managerId) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
+        List<Employee> employees = employeeService.getEmployeesByManagerId(managerId);
+        return ResponseEntity.ok(employees);
+    }
+
     @PreAuthorize("hasAnyAuthority('manager', 'empleado', 'superusuario')")
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id,  @AuthenticationPrincipal UserDetails userDetails) {
         Optional<Employee> employeeOptional = employeeService.findById(id);
         if (employeeOptional.isPresent()) {
             return new ResponseEntity<>(employeeOptional.get(), HttpStatus.OK);
