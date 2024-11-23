@@ -2,6 +2,9 @@ package com.example.extra_hours_amadeus.service;
 
 import com.example.extra_hours_amadeus.entity.Employee;
 import com.example.extra_hours_amadeus.repository.EmployeeRepository;
+import com.example.extra_hours_amadeus.repository.UsersRepo;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,14 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private UsersRepo usersRepo;
+
+    public EmployeeService(EmployeeRepository employeeRepository, UsersRepo usersRepo) {
+        this.employeeRepository = employeeRepository;
+        this.usersRepo = usersRepo;
+    }
 
     public Optional<Employee> findById(Long id) {
         return employeeRepository.findById(id);
@@ -43,8 +54,12 @@ public class EmployeeService {
         }
     }
 
+    @Transactional
     public void deleteEmployee(Long id) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
         employeeRepository.deleteById(id);
+        usersRepo.deleteById(employee.getId());
     }
 
 }

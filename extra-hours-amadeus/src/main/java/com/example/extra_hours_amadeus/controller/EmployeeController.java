@@ -75,7 +75,7 @@ public class EmployeeController {
                     email,
                     dto.getName(),
                     encodedPassword,
-                    dto.getRole() != null ? dto.getRole() : "empleado",
+                    dto.getRole() != null ? dto.getRole() : "",
                     username
             );
 

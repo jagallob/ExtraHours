@@ -49,15 +49,32 @@ const UpdateDeletePersonal = () => {
   };
 
   const handleDelete = async () => {
-    try {
-      await deleteEmployee(selectedEmployee.id);
-      message.success("Empleado eliminado correctamente");
-      setDeleteModalOpen(false);
-      setEmployees(employees.filter((emp) => emp.id !== selectedEmployee.id));
-    } catch (error) {
-      console.error(error);
-      message.error("Error al eliminar el empleado");
-    }
+    Modal.confirm({
+      title:
+        "¿Estás seguro que deseas eliminar este empleado y sus registros asociados?",
+      content: "Esta acción no se puede deshacer.",
+      okText: "Eliminar",
+      okType: "danger",
+      cancelText: "Cancelar",
+      onOk: async () => {
+        try {
+          await deleteEmployee(selectedEmployee.id);
+          message.success("Empleado eliminado correctamente");
+
+          setEmployees((prevEmployees) =>
+            prevEmployees.filter((emp) => emp.id !== selectedEmployee.id)
+          );
+
+          setDeleteModalOpen(false);
+        } catch (error) {
+          console.error("Error al eliminar empleado:", error);
+          message.error("Error al eliminar el empleado. Intenta nuevamente.");
+        }
+      },
+      onCancel() {
+        message.info("Eliminación cancelada");
+      },
+    });
   };
 
   const columns = [
