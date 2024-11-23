@@ -46,6 +46,7 @@ public class EmployeeService {
             employee.setPosition(employeeDetails.getPosition());
             employee.setSalary(employeeDetails.getSalary());
             employee.setManager_id(employeeDetails.getManager_id());
+            employee.setManager_id(employeeDetails.getManager_id());
             employee.setManager(employeeDetails.getManager());
 
             return employeeRepository.save(employee);
