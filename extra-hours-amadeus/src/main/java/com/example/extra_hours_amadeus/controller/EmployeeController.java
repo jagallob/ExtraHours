@@ -93,7 +93,8 @@ public class EmployeeController {
         }
     }
 
-    @PreAuthorize("hasAuthority('manager')")
+    @PreAuthorize("hasAuthority('superusuario')")
+    @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(
             @PathVariable Long id,
@@ -102,7 +103,7 @@ public class EmployeeController {
         return new ResponseEntity<>(updateEmployee, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('manager')")
+    @PreAuthorize("hasAuthority('superusuario')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
