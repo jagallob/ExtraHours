@@ -75,15 +75,6 @@ const UpdateDeletePersonal = () => {
         message.info("Eliminación cancelada");
       },
     });
-    try {
-      await deleteEmployee(selectedEmployee.id);
-      message.success("Empleado eliminado correctamente");
-      setDeleteModalOpen(false);
-      setEmployees(employees.filter((emp) => emp.id !== selectedEmployee.id));
-    } catch (error) {
-      console.error(error);
-      message.error("Error al eliminar el empleado");
-    }
   };
 
   const columns = [
