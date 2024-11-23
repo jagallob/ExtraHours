@@ -14,16 +14,19 @@ public class Employee {
     private String name;
     private String position;
     private Double salary;
-    private String manager;
-    private int manager_id;
 
-    public Employee(Long id, String name, String position, Double salary, String manager, Integer manager_id) {
+
+    @ManyToOne
+    @JoinColumn(name = "manager_id", referencedColumnName = "manager_id")
+    @JoinColumn(name = "manager_name", referencedColumnName = "manager_name")
+    private Manager manager;
+
+    public Employee(Long id, String name, String position, Double salary, Manager manager) {
         this.id = id;
         this.name = name;
         this.position = position;
         this.salary = salary;
         this.manager = manager;
-        this.manager_id = manager_id;
     }
 
     public Employee() {}

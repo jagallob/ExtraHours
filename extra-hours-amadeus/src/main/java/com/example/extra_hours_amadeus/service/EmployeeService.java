@@ -1,8 +1,11 @@
 package com.example.extra_hours_amadeus.service;
 
+import com.example.extra_hours_amadeus.dto.UpdateEmployeeDTO;
 import com.example.extra_hours_amadeus.entity.Employee;
+import com.example.extra_hours_amadeus.entity.Manager;
 import com.example.extra_hours_amadeus.repository.EmployeeRepository;
 import com.example.extra_hours_amadeus.repository.ExtraHourRepository;
+import com.example.extra_hours_amadeus.repository.ManagerRepository;
 import com.example.extra_hours_amadeus.repository.UsersRepo;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -15,17 +18,15 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
 
-    @Autowired
     private final EmployeeRepository employeeRepository;
-
-    @Autowired
+    private final ManagerRepository managerRepository;
     private final UsersRepo usersRepo;
-
-    @Autowired
     private final ExtraHourRepository extraHourRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository, UsersRepo usersRepo, ExtraHourRepository extraHourRepository) {
+    @Autowired
+    public EmployeeService(EmployeeRepository employeeRepository, ManagerRepository managerRepository, UsersRepo usersRepo, ExtraHourRepository extraHourRepository) {
         this.employeeRepository = employeeRepository;
+        this.managerRepository = managerRepository;
         this.usersRepo = usersRepo;
         this.extraHourRepository = extraHourRepository;
     }
@@ -42,21 +43,29 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Employee updateEmployee(Long id, Employee employeeDetails) {
+    @Transactional
+    public Employee updateEmployee(Long id, UpdateEmployeeDTO dto) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+
         if (optionalEmployee.isPresent()) {
             Employee employee = optionalEmployee.get();
+            employee.setName(dto.getName());
+            employee.setPosition(dto.getPosition());
+            employee.setSalary(dto.getSalary());
 
-            employee.setName(employeeDetails.getName());
-            employee.setPosition(employeeDetails.getPosition());
-            employee.setSalary(employeeDetails.getSalary());
-            employee.setManager_id(employeeDetails.getManager_id());
-            employee.setManager_id(employeeDetails.getManager_id());
-            employee.setManager(employeeDetails.getManager());
+            Optional<Manager> optionalManager = managerRepository.findById(dto.getManager_id());
+            if (optionalManager.isPresent()) {
+                Manager manager = optionalManager.get();
+                employee.setManager(manager);
+
+
+            } else {
+                throw new RuntimeException("Manager no encontrado con el ID proporcionado");
+            }
 
             return employeeRepository.save(employee);
         } else {
-            return null;
+            throw new RuntimeException("Empleado no encontrado");
         }
     }
 

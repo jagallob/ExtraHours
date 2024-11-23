@@ -27,14 +27,18 @@ const UpdateDeletePersonal = () => {
 
   const showEditModal = (employee) => {
     setSelectedEmployee(employee);
-    form.setFieldsValue({ ...employee, manager_id: employee.manager_id });
+    form.setFieldsValue({
+      ...employee,
+      manager_id: employee.manager.manager_id,
+      manager_name: employee.manager_name || "",
+    });
     setEditModalOpen(true);
   };
 
   const handleEdit = async (values) => {
     try {
-      await updateEmployee(selectedEmployee.id, values);
-      message.success("Empleado actualizado correctamente");
+      const response = await updateEmployee(selectedEmployee.id, values);
+      message.success(response.message);
       setEditModalOpen(false);
       onSearch(selectedEmployee.id);
     } catch (error) {
@@ -98,15 +102,15 @@ const UpdateDeletePersonal = () => {
       dataIndex: "position",
       key: "position",
     },
-    // {
-    //   title: "Manager",
-    //   dataIndex: "manager",
-    //   key: "manager",
-    // },
     {
-      title: "Manager_id",
-      dataIndex: "manager_id",
-      key: "id",
+      title: "Manager ID",
+      dataIndex: ["manager", "manager_id"],
+      key: "manager_id",
+    },
+    {
+      title: "Manager Name",
+      dataIndex: ["manager", "manager_name"],
+      key: "manager_name",
     },
     {
       title: "Acciones",
@@ -147,20 +151,13 @@ const UpdateDeletePersonal = () => {
           </Form.Item>
           <Form.Item name="position" label="Cargo" rules={[{ required: true }]}>
             <Input />
-            {/* </Form.Item>
-          <Form.Item
-            name="manager"
-            label="Manager"
-            rules={[{ required: true }]}
-          >
-            <Input /> */}
           </Form.Item>
           <Form.Item
             name="manager_id"
             label="Manager_id"
             rules={[{ required: true }]}
           >
-            <Input />
+            <Input type="number" />
           </Form.Item>
         </Form>
       </Modal>
