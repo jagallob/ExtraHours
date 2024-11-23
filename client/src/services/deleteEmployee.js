@@ -14,10 +14,9 @@ export const deleteEmployee = async (employeeId) => {
     );
 
     if (!response.ok) {
-      throw new Error("Error en la solicitud");
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Error al eliminar el empleado");
     }
-
-    return;
   } catch (error) {
     console.error("Error al eliminar empleado:", error);
     throw error;

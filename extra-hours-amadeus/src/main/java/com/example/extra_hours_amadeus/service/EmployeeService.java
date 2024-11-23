@@ -1,8 +1,10 @@
 package com.example.extra_hours_amadeus.service;
 
 import com.example.extra_hours_amadeus.entity.Employee;
-import com.example.extra_hours_amadeus.entity.Manager;
 import com.example.extra_hours_amadeus.repository.EmployeeRepository;
+import com.example.extra_hours_amadeus.repository.UsersRepo;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +17,12 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public List<Employee> getEmployeesByManagerId(int managerId) {
-        return employeeRepository.findByManagerId(managerId);
+    @Autowired
+    private UsersRepo usersRepo;
+
+    public EmployeeService(EmployeeRepository employeeRepository, UsersRepo usersRepo) {
+        this.employeeRepository = employeeRepository;
+        this.usersRepo = usersRepo;
     }
 
     public Optional<Employee> findById(Long id) {
@@ -39,7 +45,7 @@ public class EmployeeService {
             employee.setName(employeeDetails.getName());
             employee.setPosition(employeeDetails.getPosition());
             employee.setSalary(employeeDetails.getSalary());
-            employee.setManagerId(employeeDetails.getManagerId());
+            employee.setManager_id(employeeDetails.getManager_id());
             employee.setManager(employeeDetails.getManager());
 
             return employeeRepository.save(employee);
@@ -48,8 +54,12 @@ public class EmployeeService {
         }
     }
 
+    @Transactional
     public void deleteEmployee(Long id) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Empleado no encontrado"));
         employeeRepository.deleteById(id);
+        usersRepo.deleteById(employee.getId());
     }
 
 }

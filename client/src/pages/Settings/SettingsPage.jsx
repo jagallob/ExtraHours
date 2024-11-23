@@ -51,7 +51,7 @@ const SettingsPage = () => {
             </div>
             <div
               className="menu-item"
-              onClick={() => navigate("/settings/UpdateDeleteApprove")}
+              onClick={() => navigate("/settings/UpdateDeletePersonal")}
             >
               <img src={Agregar} alt="ïcono de más (+)" />
               <p>Actualizar ó Eliminar Personal</p>
