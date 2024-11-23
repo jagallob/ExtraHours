@@ -15,8 +15,6 @@ public class Employee {
     private String position;
     private Double salary;
     private String manager;
-
-    @Column(name = "manager_id", nullable = false)
     private int manager_id;
 
     public Employee(Long id, String name, String position, Double salary, String manager, Integer manager_id) {
