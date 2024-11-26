@@ -41,7 +41,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/employee/**").authenticated()
                         .requestMatchers("/api/logout").authenticated()
                         .requestMatchers("/auth/change-password").authenticated()
-                        .requestMatchers("/api/extra-hour/**").authenticated()
+                        .requestMatchers("/api/extra-hour/**").permitAll()
                         .requestMatchers("/api/extra-hour/{registry}").permitAll()
                         .requestMatchers("/api/extra-hour/date-range").hasAnyRole("manager","superusuario")
                         .anyRequest().authenticated())

@@ -8,6 +8,7 @@ import { approveExtraHour } from "@services/approveExtraHour";
 import { columns as staticColumns } from "@utils/tableColumns";
 import { useConfig } from "../../utils/ConfigProvider";
 import "./UpdateDeleteApprove.scss";
+import dayjs from "dayjs";
 
 export const UpdateDeleteApprove = () => {
   const [employeeData, setEmployeeData] = useState([]);
@@ -38,7 +39,7 @@ export const UpdateDeleteApprove = () => {
 
     try {
       const employee = await findEmployee(numericIdOrRegistry);
-      const extraHours = await findExtraHour(numericIdOrRegistry, "id");
+      const extraHours = await findExtraHour(numericIdOrRegistry, "registry");
 
       let combinedData = [];
       if (extraHours.length > 0) {
@@ -178,18 +179,21 @@ export const UpdateDeleteApprove = () => {
           Number(values.nocturnal) +
           Number(values.diurnalHoliday) +
           Number(values.nocturnalHoliday),
+        date: dayjs(values.date).format("YYYY-MM-DD"),
+        observations: values.observations,
       };
 
       console.log("Datos a actualizar:", updatedValues);
 
-      const updatedData = employeeData.map((item) =>
-        item.registry === registry ? { ...item, ...updatedValues } : item
-      );
-      setEmployeeData(updatedData);
-
       const response = await updateExtraHour(registry, updatedValues);
-
       console.log("Respuesta de la API:", response);
+
+      // Actualiza el estado local
+      setEmployeeData((prevData) =>
+        prevData.map((item) =>
+          item.registry === registry ? { ...item, ...updatedValues } : item
+        )
+      );
 
       message.success("Registro actualizado exitosamente");
     } catch (error) {

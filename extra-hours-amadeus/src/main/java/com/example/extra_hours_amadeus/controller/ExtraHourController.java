@@ -108,11 +108,12 @@ public class ExtraHourController {
         return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/{registry}")
+    @PutMapping("/{registry}/update")
+    @PreAuthorize("hasRole('manager') or hasRole('superusuario')")
     public ResponseEntity<ExtraHour> updateExtraHour(
             @PathVariable Long registry,
             @RequestBody ExtraHour extraHourDetails) {
-        Optional<ExtraHour> existingExtraHour = extraHourRepository.findByRegistry(registry);
+        Optional<ExtraHour> existingExtraHour = extraHourRepository.findById(registry);
 
         if (existingExtraHour.isPresent()) {
             ExtraHour extraHour = existingExtraHour.get();
@@ -137,7 +138,8 @@ public class ExtraHourController {
     }
 
 
-    @DeleteMapping("/{registry}")
+
+    @DeleteMapping("/{registry}/delete")
     @PreAuthorize("hasRole('manager') or hasRole('superusuario')")
     public ResponseEntity<String> deleteExtraHour(@PathVariable Long registry) {
         boolean deleted = extraHourService.deleteExtraHourByRegistry(registry);
