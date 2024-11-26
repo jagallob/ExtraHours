@@ -130,6 +130,7 @@ const UpdateDeletePersonal = () => {
 
   return (
     <div className="EmployeeManagementPage">
+      <h2>Actualizar o eliminar Personal</h2>
       <div className="search-container">
         <Search placeholder="Buscar por ID de empleado" onSearch={onSearch} />
       </div>
