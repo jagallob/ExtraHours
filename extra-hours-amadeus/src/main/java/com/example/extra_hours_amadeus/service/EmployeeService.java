@@ -1,8 +1,13 @@
 package com.example.extra_hours_amadeus.service;
 
+import com.example.extra_hours_amadeus.dto.UpdateEmployeeDTO;
 import com.example.extra_hours_amadeus.entity.Employee;
 import com.example.extra_hours_amadeus.entity.Manager;
 import com.example.extra_hours_amadeus.repository.EmployeeRepository;
+import com.example.extra_hours_amadeus.repository.ExtraHourRepository;
+import com.example.extra_hours_amadeus.repository.ManagerRepository;
+import com.example.extra_hours_amadeus.repository.UsersRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +17,21 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
+    private final ManagerRepository managerRepository;
+    private final UsersRepo usersRepo;
+    private final ExtraHourRepository extraHourRepository;
 
-    public List<Employee> getEmployeesByManagerId(int managerId) {
-        return employeeRepository.findByManagerId(managerId);
+    @Autowired
+    public EmployeeService(EmployeeRepository employeeRepository, ManagerRepository managerRepository, UsersRepo usersRepo, ExtraHourRepository extraHourRepository) {
+        this.employeeRepository = employeeRepository;
+        this.managerRepository = managerRepository;
+        this.usersRepo = usersRepo;
+        this.extraHourRepository = extraHourRepository;
+    }
+
+    public List<Employee> getEmployeesByManagerId(Long manager_id) {
+        return employeeRepository.findByManager_Id(manager_id);
     }
 
     public Optional<Employee> findById(Long id) {
@@ -31,25 +46,35 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public Employee updateEmployee(Long id, Employee employeeDetails) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if (optionalEmployee.isPresent()) {
-            Employee employee = optionalEmployee.get();
+    @Transactional
+    public Employee updateEmployee(Long id, UpdateEmployeeDTO dto) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
 
-            employee.setName(employeeDetails.getName());
-            employee.setPosition(employeeDetails.getPosition());
-            employee.setSalary(employeeDetails.getSalary());
-            employee.setManagerId(employeeDetails.getManagerId());
-            employee.setManager(employeeDetails.getManager());
+        employee.setName(dto.getName());
+        employee.setPosition(dto.getPosition());
+        employee.setSalary(dto.getSalary());
 
-            return employeeRepository.save(employee);
+        Manager manager = managerRepository.findById(dto.getManager_id())
+                .orElseThrow(() -> new RuntimeException("Manager no encontrado con el ID proporcionado"));
+
+        employee.setManager(manager);
+
+        System.out.println("Manager asignado: " + employee.getManager().getId());
+
+
+        return employeeRepository.save(employee);
+    }
+
+    @Transactional
+    public void deleteEmployee(Long id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if (employee.isPresent()) {
+            employeeRepository.delete(employee.get());
         } else {
-            return null;
+            throw new RuntimeException("Empleado no encontrado");
         }
     }
-
-    public void deleteEmployee(Long id) {
-        employeeRepository.deleteById(id);
-    }
-
 }
+
+

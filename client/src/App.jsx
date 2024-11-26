@@ -12,7 +12,7 @@ import { AuthProvider } from "./utils/AuthContext";
 import { ConfigProvider } from "./utils/ConfigProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SettingsPage from "./pages/Settings/SettingsPage";
-import { UpdateDeleteApprove } from "./components/UpdateDeleteApprove/UpdateDeleteApprove";
+import UpdateDeletePersonal from "./components/UpdateDeletePersonal/UpdateDeletePersonal";
 
 function App() {
   return (
@@ -64,8 +64,8 @@ function App() {
               />
               <Route path="PersonalSettings" element={<PersonalSettings />} />
               <Route
-                path="UpdateDeleteApprove"
-                element={<UpdateDeleteApprove />}
+                path="UpdateDeletePersonal"
+                element={<UpdateDeletePersonal />}
               />
             </Route>
           </Routes>

@@ -11,22 +11,21 @@ public class Employee {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
+
     private String name;
     private String position;
     private Double salary;
-    private String manager;
 
+    @ManyToOne
+    @JoinColumn(name = "manager_id", insertable = true, updatable = true)
+    private Manager manager;
 
-    @Column(name = "manager_id", nullable = false)
-    private int managerId;
-
-    public Employee(Long id, String name, String position, Double salary, String manager, Manager manager_id) {
+    public Employee(Long id, String name, String position, Double salary,  Manager manager) {
         this.id = id;
         this.name = name;
         this.position = position;
         this.salary = salary;
         this.manager = manager;
-        this.managerId= managerId;
     }
 
     public Employee() {}

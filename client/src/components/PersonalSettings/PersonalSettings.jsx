@@ -144,6 +144,7 @@ export const PersonalSettings = () => {
           value={newEmployee.role}
           onChange={handleEmployeeChange}
         >
+          <option value=""></option>
           <option value="empleado">Empleado</option>
           <option value="manager">Manager</option>
           <option value="superusuario">Superusuario</option>

@@ -112,10 +112,10 @@ public class JWTUtils {
                 .getBody();
 
 
-        Integer managerId = claims.get("manager_id", Integer.class);
+        Integer managerId = claims.get("id", Integer.class);
 
         if (managerId == null) {
-            throw new IllegalArgumentException("El token no contiene un manager_id");
+            throw new IllegalArgumentException("El token no contiene un id");
         }
 
         return managerId;

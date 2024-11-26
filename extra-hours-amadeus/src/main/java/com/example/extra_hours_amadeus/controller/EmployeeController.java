@@ -1,22 +1,22 @@
 package com.example.extra_hours_amadeus.controller;
 
 import com.example.extra_hours_amadeus.dto.EmployeeWithUserDTO;
+import com.example.extra_hours_amadeus.dto.UpdateEmployeeDTO;
 import com.example.extra_hours_amadeus.entity.Employee;
 import com.example.extra_hours_amadeus.entity.Manager;
 import com.example.extra_hours_amadeus.entity.Users;
+import com.example.extra_hours_amadeus.repository.ManagerRepository;
 import com.example.extra_hours_amadeus.repository.UsersRepo;
 import com.example.extra_hours_amadeus.service.EmployeeService;
-import com.example.extra_hours_amadeus.service.JWTUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -35,25 +35,12 @@ public class EmployeeController {
     private UsersRepo usersRepo;
 
     @Autowired
-    private final JWTUtils jwtUtils;
+    private ManagerRepository managerRepository;
 
-    public EmployeeController(JWTUtils jwtUtils) {
-        this.jwtUtils = jwtUtils;
-    }
 
-    @GetMapping("/manager/{manager_id}")
-    public ResponseEntity<List<Employee>> getEmployeesByManager(@PathVariable int managerId, @RequestHeader("Authorization") String token) {
-        int tokenManagerId = jwtUtils.getManagerIdFromToken(token);
-        if (tokenManagerId != managerId) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
-        }
-        List<Employee> employees = employeeService.getEmployeesByManagerId(managerId);
-        return ResponseEntity.ok(employees);
-    }
 
-    @PreAuthorize("hasAnyAuthority('manager', 'empleado', 'superusuario')")
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id,  @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
         Optional<Employee> employeeOptional = employeeService.findById(id);
         if (employeeOptional.isPresent()) {
             return new ResponseEntity<>(employeeOptional.get(), HttpStatus.OK);
@@ -72,17 +59,22 @@ public class EmployeeController {
     @PostMapping
     @Transactional
     public ResponseEntity<Map<String, String>> addEmployee(@RequestBody EmployeeWithUserDTO dto) {
-        if (dto.getManager() == null || dto.getManager_id() == null) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Manager y Manager ID son requeridos"));
+        if (dto.getManager_id() == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Manager ID es requerido"));
         }
         try {
+            Optional<Manager> optionalManager = managerRepository.findById(dto.getManager_id());
+            if (optionalManager.isEmpty()) {
+                return ResponseEntity.badRequest().body(Map.of("error", "Manager no encontrado con el ID proporcionado"));
+            }
+            Manager manager = optionalManager.get();
+
             Employee employee = new Employee(
                     dto.getId(),
                     dto.getName(),
                     dto.getPosition(),
                     dto.getSalary(),
-                    dto.getManager(),
-                    dto.getManager_id()
+                    manager
             );
 
             employeeService.addEmployee(employee);
@@ -100,9 +92,6 @@ public class EmployeeController {
                     username
             );
 
-            System.out.println(user);
-
-
             usersRepo.save(user);
 
             return ResponseEntity.status(HttpStatus.CREATED)
@@ -114,16 +103,34 @@ public class EmployeeController {
         }
     }
 
-    @PreAuthorize("hasAuthority('manager')")
+    @Transactional
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateEmployee(
-            @PathVariable Long id,
-            @RequestBody Employee employeeDetails) {
-        Employee updateEmployee = employeeService.updateEmployee(id, employeeDetails);
-        return new ResponseEntity<>(updateEmployee, HttpStatus.OK);
+    public ResponseEntity<Map<String, String>> updateEmployee(@PathVariable("id") Long id, @RequestBody UpdateEmployeeDTO dto) {
+
+        if (dto.getManager_id() == null) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Manager ID es requerido"));
+        }
+
+        try {
+
+            Employee updatedEmployee = employeeService.updateEmployee(id, dto);
+
+            if (updatedEmployee == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Empleado no encontrado"));
+            }
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Empleado actualizado correctamente");
+            response.put("manager_id", String.valueOf(updatedEmployee.getManager().getId()));
+            response.put("manager_name", updatedEmployee.getManager().getManager_name());
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Error al actualizar el empleado", "details", e.getMessage()));
+        }
     }
 
-    @PreAuthorize("hasAuthority('manager')")
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);

@@ -7,6 +7,7 @@ import com.example.extra_hours_amadeus.repository.ExtraHourRepository;
 import com.example.extra_hours_amadeus.service.EmployeeService;
 import com.example.extra_hours_amadeus.service.ExtraHourService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,6 @@ public class ExtraHourController {
     }
 
     @GetMapping("/date-range")
-    @PreAuthorize("hasAnyRole('manager', 'superusuario')")
     public ResponseEntity<List<ExtraHour>> getExtraHoursByDateRange(
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate) {
@@ -52,11 +52,10 @@ public class ExtraHourController {
             return ResponseEntity.status(404).body(null);
         }
 
-            return ResponseEntity.ok(extraHours);
+        return ResponseEntity.ok(extraHours);
     }
 
     @GetMapping("/date-range-with-employee")
-    @PreAuthorize("hasAnyRole('manager', 'superusuario')")
     public ResponseEntity<List<ExtraHourWithEmployee>> getExtraHoursByDateRangeWithEmployee(
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate) {
@@ -98,7 +97,6 @@ public class ExtraHourController {
     }
 
     @PatchMapping("/{registry}/approve")
-    @PreAuthorize("hasAnyRole('MANAGER', 'SUPERUSERIO')")
     public ResponseEntity<ExtraHour> approveExtraHour(@PathVariable Long registry) {
         Optional<ExtraHour> extraHourOptional = extraHourRepository.findById(registry);
         if (extraHourOptional.isPresent()) {
@@ -110,14 +108,44 @@ public class ExtraHourController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{registry}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'SUPERUSERIO')")
-    public ResponseEntity<Void> deleteExtraHour(@PathVariable Long registry) {
-        if (extraHourRepository.existsById(registry)) {
-            extraHourRepository.deleteById(registry);
-            return ResponseEntity.noContent().build();
+    @PutMapping("/{registry}")
+    public ResponseEntity<ExtraHour> updateExtraHour(
+            @PathVariable Long registry,
+            @RequestBody ExtraHour extraHourDetails) {
+        Optional<ExtraHour> existingExtraHour = extraHourRepository.findByRegistry(registry);
+
+        if (existingExtraHour.isPresent()) {
+            ExtraHour extraHour = existingExtraHour.get();
+            extraHour.setDiurnal(extraHourDetails.getDiurnal());
+            extraHour.setNocturnal(extraHourDetails.getNocturnal());
+            extraHour.setDiurnalHoliday(extraHourDetails.getDiurnalHoliday());
+            extraHour.setNocturnalHoliday(extraHourDetails.getNocturnalHoliday());
+            extraHour.setExtrasHours(
+                    extraHourDetails.getDiurnal() +
+                            extraHourDetails.getNocturnal() +
+                            extraHourDetails.getDiurnalHoliday() +
+                            extraHourDetails.getNocturnalHoliday()
+            );
+            extraHour.setDate(extraHourDetails.getDate());
+            extraHour.setObservations(extraHourDetails.getObservations());
+
+            ExtraHour updatedExtraHour = extraHourRepository.save(extraHour);
+            return ResponseEntity.ok(updatedExtraHour);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.notFound().build();
+    }
+
+
+    @DeleteMapping("/{registry}")
+    @PreAuthorize("hasRole('manager') or hasRole('superusuario')")
+    public ResponseEntity<String> deleteExtraHour(@PathVariable Long registry) {
+        boolean deleted = extraHourService.deleteExtraHourByRegistry(registry);
+        if (deleted) {
+            return ResponseEntity.ok("Registro eliminado exitosamente.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Registro no encontrado.");
+        }
     }
 }
 
