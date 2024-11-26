@@ -66,7 +66,7 @@ export const EmployeeInfo = ({ onIdChange, reset, setReset }) => {
               <br />
               Manager
             </div>
-            <div className="description">{employee.manager.manager_name}</div>
+            <div className="description">{employee.manager}</div>
           </div>
         </div>
       )}

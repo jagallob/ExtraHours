@@ -6,13 +6,13 @@ import LoginPage from "./pages/LoginPage";
 import ReportsPage from "./pages/ReportsPage";
 import ExtraHoursSettingsPage from "./pages/Settings/ExtraHoursSettingsPage";
 import { PersonalSettings } from "./components/PersonalSettings/PersonalSettings";
+import UpdateDeletePersonal from "./components/UpdateDeletePersonal/UpdateDeletePersonal";
 import AddExtrahour from "./pages/AddExtrahour";
 import UpdateDeleteApprovePage from "./pages/UpdateDeleteApprovePage";
 import { AuthProvider } from "./utils/AuthContext";
 import { ConfigProvider } from "./utils/ConfigProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SettingsPage from "./pages/Settings/SettingsPage";
-import UpdateDeletePersonal from "./components/UpdateDeletePersonal/UpdateDeletePersonal";
 
 function App() {
   return (

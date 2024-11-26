@@ -38,7 +38,6 @@ public class SecurityConfig {
                         .requestMatchers("/empleado/**").hasAnyAuthority("empleado")
                         .requestMatchers("/superusuario/**").hasAnyAuthority("superusuario")
                         .requestMatchers("/api/employee/**").permitAll()
-                        .requestMatchers("/api/employee/**").authenticated()
                         .requestMatchers("/api/logout").authenticated()
                         .requestMatchers("/auth/change-password").authenticated()
                         .requestMatchers("/api/extra-hour/**").permitAll()
