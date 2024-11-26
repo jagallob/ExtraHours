@@ -93,7 +93,7 @@ El sistema está diseñado para cumplir con las normativas laborales colombianas
 #####   - Manager asignado.
 #####   - Manager ID.
 #####   - Seleccionar el rol.
-#####   Nota: el correo electrónico se genera automáticamente, al dar click en Agregar se genera el nuevo usuario en la tabla users, la contraseña inicial por defecto es password123, y se recomienda cambiarla al primer inicio de sesión.
+#####   Nota: el correo electrónico se genera automáticamente, al dar click en Agregar se genera el nuevo usuario en la tabla users, la contraseña inicial por defecto es password123 y se recomienda cambiarla al primer inicio de sesión.
 
 ####  4.3 Actualizar o Eliminar personal:
 ##### **Campos Requeridos**:
