@@ -137,8 +137,6 @@ public class ExtraHourController {
         }
     }
 
-
-
     @DeleteMapping("/{registry}/delete")
     @PreAuthorize("hasRole('manager') or hasRole('superusuario')")
     public ResponseEntity<String> deleteExtraHour(@PathVariable Long registry) {

@@ -39,7 +39,7 @@ export const UpdateDeleteApprove = () => {
 
     try {
       const employee = await findEmployee(numericIdOrRegistry);
-      const extraHours = await findExtraHour(numericIdOrRegistry, "registry");
+      const extraHours = await findExtraHour(numericIdOrRegistry, "id");
 
       let combinedData = [];
       if (extraHours.length > 0) {
