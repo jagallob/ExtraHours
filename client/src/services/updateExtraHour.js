@@ -1,4 +1,4 @@
-export const updateExtraHour = async (registry) => {
+export const updateExtraHour = async (registry, updatedValues) => {
   try {
     const options = {
       method: "PUT",
@@ -6,10 +6,11 @@ export const updateExtraHour = async (registry) => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
+      body: JSON.stringify(updatedValues),
     };
 
     const response = await fetch(
-      `http://localhost:8080/extra-hour/${registry}`,
+      `http://localhost:8080/api/extra-hour/${registry}/update`,
       options
     );
 

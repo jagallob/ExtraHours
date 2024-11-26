@@ -110,12 +110,45 @@ public class ExtraHourController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{registry}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'SUPERUSERIO')")
-    public ResponseEntity<Void> deleteExtraHour(@PathVariable Long registry) {
-        if (extraHourRepository.existsById(registry)) {
-            extraHourRepository.deleteById(registry);
-            return ResponseEntity.noContent().build();
+    @PutMapping("/{registry}/update")
+    @PreAuthorize("hasRole('manager') or hasRole('superusuario')")
+    public ResponseEntity<ExtraHour> updateExtraHour(
+            @PathVariable Long registry,
+            @RequestBody ExtraHour extraHourDetails) {
+        Optional<ExtraHour> existingExtraHour = extraHourRepository.findById(registry);
+
+        if (existingExtraHour.isPresent()) {
+            ExtraHour extraHour = existingExtraHour.get();
+            extraHour.setDiurnal(extraHourDetails.getDiurnal());
+            extraHour.setNocturnal(extraHourDetails.getNocturnal());
+            extraHour.setDiurnalHoliday(extraHourDetails.getDiurnalHoliday());
+            extraHour.setNocturnalHoliday(extraHourDetails.getNocturnalHoliday());
+            extraHour.setExtrasHours(
+                    extraHourDetails.getDiurnal() +
+                            extraHourDetails.getNocturnal() +
+                            extraHourDetails.getDiurnalHoliday() +
+                            extraHourDetails.getNocturnalHoliday()
+            );
+            extraHour.setDate(extraHourDetails.getDate());
+            extraHour.setObservations(extraHourDetails.getObservations());
+
+            ExtraHour updatedExtraHour = extraHourRepository.save(extraHour);
+            return ResponseEntity.ok(updatedExtraHour);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+
+    @DeleteMapping("/{registry}/delete")
+    @PreAuthorize("hasRole('manager') or hasRole('superusuario')")
+    public ResponseEntity<String> deleteExtraHour(@PathVariable Long registry) {
+        boolean deleted = extraHourService.deleteExtraHourByRegistry(registry);
+        if (deleted) {
+            return ResponseEntity.ok("Registro eliminado exitosamente.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Registro no encontrado.");
+
         }
         return ResponseEntity.notFound().build();
     }
