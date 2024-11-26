@@ -2,6 +2,7 @@ package com.example.extra_hours_amadeus.service;
 
 import com.example.extra_hours_amadeus.entity.ExtraHour;
 import com.example.extra_hours_amadeus.repository.ExtraHourRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,6 @@ public class ExtraHourService {
     @Autowired
     private  ExtraHourRepository extraHourRepository;
 
-//    @Autowired
-//    public ExtraHourService(ExtraHourRepository extraHourRepository) {
-//        this.extraHourRepository = extraHourRepository;
-//    }
 
     public List<ExtraHour> findByDateRange(LocalDate startDate, LocalDate endDate) {
         return extraHourRepository.findByDateBetween(startDate, endDate);
@@ -31,8 +28,20 @@ public class ExtraHourService {
         return extraHours != null ? extraHours : new ArrayList<>();
     }
 
-    public Optional<ExtraHour> findByRegistry(int registry) {
+    public Optional<ExtraHour> findByRegistry(Long registry) {
         return extraHourRepository.findByRegistry(registry);
     }
 
+    @Transactional
+    public boolean deleteExtraHourByRegistry(Long registry) {
+        if (extraHourRepository.existsByRegistry(registry)) {
+            extraHourRepository.deleteByRegistry(registry);
+            return true;
+        }
+            return false;
+    }
 }
+
+
+
+
