@@ -1,4 +1,4 @@
-# extra-hours-deltacode
+# ExtraHours
 
 Wireframes
 https://miro.com/app/board/uXjVKxUM7T8=/?moveToWidget=3458764597049633884&cot=14
@@ -8,77 +8,105 @@ https://www.figma.com/design/QdMm6JmxJ7tPx4XKkLhXLB/Extra-Hours-Delta?node-id=0-
  
 ## **Introducción**
 
-Este manual de usuario está diseñado para guiar a los administradores y gerentes en el uso del sistema de gestión de horas extra de Amadeus. El sistema permite agregar, actualizar, eliminar y aprobar registros de horas extra, así como generar informes detallados.
+Este manual de usuario está diseñado para guiar a los empleados, managers y administradores en el uso del sistema de gestión de horas extra de Amadeus. Este sistema permite:
+
+- Agregar, actualizar, eliminar y aprobar registros de horas extra.
+- Generar informes detallados. 
+- Configurar parámetros relacionados con las horas extra.
+- Gestionar empleados (agregar, actualizar y eliminar personal).
+
+El sistema está diseñado para cumplir con las normativas laborales colombianas relacionadas con la gestión de horas extra.
+
+
+## **Tecnologías usadas**
+
+- Frontend: React con JavaScript
+- Backend: Java con Spring Boot
+- Base de datos: MySQL
+
+## **Recomendaciones iniciales**
+
+- Realizar las instalaciones globales necesarias con el siguiente comando:
+   npm i
+
+- Instalar Vite en el client side del frontend:
+   npm i vite
+
+- Iniciar el cliente (frontend) con el siguienre comando:
+   npm run dev
+
+- Activar el backend desde el IDE (por ejemplo, IntelliJ IDEA).
+
+- Asegurarse de que la base de datos MySQL esté activa y configurada correctamente.
+
 
 ## **Funcionalidades Principales**
 
 ### 1. **Agregar Horas Extra**
    
-##### **Perfil**: Administrador
-##### **Acción**: Agregar nueva hora extra
+##### **Perfil**: Empleado / Superusuario
+##### **Acción**: Registrar nueva hora extra.
 ##### **Campos Requeridos:**
-#### ID Empleado
-#### Fecha
-#### Tipo de hora extra (Diurna, Nocturna, Festiva Diurna, Festiva Nocturna)
-#### Observaciones
+#### ID del empleado (cédula).
+#### Fecha del registro.
+#### Hora inicio y hora fin.
+#### Observaciones.
 
-### 2. **Actualizar Horas Extra**
+### 2. **Gestión Horas Extra**
    
-##### **Perfil**: Administrador
-##### **Acción**: Actualizar hora extra existente
+##### **Perfil**: Manager / Superusuario
+##### **Acción**:  Actualizar, aprobar o eliminar registros de horas extra. El sistema emitirá una alerta si el empleado supera el límite de horas extra semanales configurado.
 ##### **Campos Requeridos**:
-##### ID Empleado
-##### Horas Extra
-##### Fecha
-##### Observaciones
+##### ID del empleado (cédula).
 
-## 3.  **Eliminar Horas Extra**
-
-##### **Perfil**: Administrador
-##### **Acción**: Eliminar hora extra existente
-##### **Campos Requeridos**:
-##### ID Empleado
-##### Número de Registro
-##### Horas Extra
-##### Seleccionar para eliminar
-
-## 4.  **Aprobar Horas Extra**
-
-##### **Perfil**: Nómina
-##### **Acción**: Aprobar registros de horas extra
-##### **Campos Requeridos**:
-##### ID Empleado
-##### Seleccionar para aprobar
-
-## 5. **Generar Informes**
+## 3. **Generar Informes**
    
-##### **Perfil**: Administrador
-##### **Acción**: Generar y descargar informes
+##### **Perfil**: Empleado / Manager / Superusuario
+##### **Acción**:  Generar y descargar informes en formato Excel.
+##### **Opciones de generación:**
+##### - Por ID del empleado (cédula).
+##### - Por rango de fechas (inicio y fin).
 ##### **Campos Requeridos**:
-##### ID Empleado
-##### Rango de fecha (Inicial y Final)
+##### ID del empleado (cédula).
+##### Rango de fecha (Inicial y Final).
 
-## 6.  **Configuración de Política de Horas Extra**
+## 4.  **Configuraciones**
  
-##### **Perfil**: Jefes
-##### **Acción**: Configurar la política de horas extra
+##### **Perfil**: Superusuario
+##### **Acción**: Configurar parámetros y gestionar personal.
+
+####  4.1 Configurar parámetros de horas extra:
+#####   - Límite semanal de horas extra.
+#####   - Multiplicador Hora Diurna.
+#####   - Multiplicador Hora Nocturna.
+#####   - Multiplicador Hora Festiva Diurna.
+#####   - Multiplicador Hora Festiva Nocturna.
+#####   - Inicio Hora Diurna (24h).
+#####   - Fin Hora Diurna (24h).
+
+####  4.2 Agregar nuevo personal:
 ##### **Campos Requeridos**:
-##### Valor porcentaje diurno
-##### Valor porcentaje nocturno
-##### Valor porcentaje festivo diurno
-##### Valor porcentaje festivo nocturno
+#####   - ID (cédula).
+#####   - Nombre.
+#####   - Posición.
+#####   - Salario.
+#####   - Manager asignado.
+#####   - Manager ID.
+#####   - Seleccionar el rol.
+#####   Nota: el correo electrónico se genera automáticamente, al dar click en Agregar se genera el nuevo usuario en la tabla users, la contraseña inicial por defecto es password123, y se recomienda cambiarla al primer inicio de sesión.
+
+####  4.3 Actualizar o Eliminar personal:
+##### **Campos Requeridos**:
+#####   - ID
 
 
-## **Perfiles Administrativos**
+## **Roles**
 
-Gerente
+### **Empleado**
+#### - Acceso: Registrar horas extra, consultar informes propios.
 
-**Sección Informes**: Genera y descarga informes.
-**Sección Actualizar**: Actualiza las horas extra existentes no pagadas.
-**Sección Agregar**: Agrega hora extra.
-**Sección Eliminar**: Elimina registros de horas extra existentes no pagadas.
-**Nómina**
-**Sección Aprobar**: Aprueba los registros de horas extra.
+### **Manager**
+#### - Acceso: Gestionar horas extra (actualizar, aprobar, eliminar), generar informes por rango de fecha o por empleado.
 
-## **Conclusión**
-Este manual proporciona una guía completa para la gestión de horas extra en el sistema Amadeus. Siga las instrucciones detalladas para realizar cada acción de manera eficiente y asegúrese de completar todos los campos requeridos para un registro preciso y efectivo.
+### **Superusuario**
+#### - Acceso: Configurar parámetros del sistema, gestionar empleados, y realizar todas las acciones de empleados y managers.
