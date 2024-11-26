@@ -7,7 +7,6 @@ import com.example.extra_hours_amadeus.repository.ExtraHourRepository;
 import com.example.extra_hours_amadeus.service.EmployeeService;
 import com.example.extra_hours_amadeus.service.ExtraHourService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +38,7 @@ public class ExtraHourController {
     }
 
     @GetMapping("/date-range")
+    @PreAuthorize("hasAnyRole('manager', 'superusuario')")
     public ResponseEntity<List<ExtraHour>> getExtraHoursByDateRange(
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate) {
@@ -52,10 +52,11 @@ public class ExtraHourController {
             return ResponseEntity.status(404).body(null);
         }
 
-        return ResponseEntity.ok(extraHours);
+            return ResponseEntity.ok(extraHours);
     }
 
     @GetMapping("/date-range-with-employee")
+    @PreAuthorize("hasAnyRole('manager', 'superusuario')")
     public ResponseEntity<List<ExtraHourWithEmployee>> getExtraHoursByDateRangeWithEmployee(
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate) {
@@ -97,6 +98,7 @@ public class ExtraHourController {
     }
 
     @PatchMapping("/{registry}/approve")
+    @PreAuthorize("hasAnyRole('MANAGER', 'SUPERUSERIO')")
     public ResponseEntity<ExtraHour> approveExtraHour(@PathVariable Long registry) {
         Optional<ExtraHour> extraHourOptional = extraHourRepository.findById(registry);
         if (extraHourOptional.isPresent()) {
@@ -137,6 +139,7 @@ public class ExtraHourController {
         }
     }
 
+
     @DeleteMapping("/{registry}/delete")
     @PreAuthorize("hasRole('manager') or hasRole('superusuario')")
     public ResponseEntity<String> deleteExtraHour(@PathVariable Long registry) {
@@ -145,7 +148,9 @@ public class ExtraHourController {
             return ResponseEntity.ok("Registro eliminado exitosamente.");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Registro no encontrado.");
+
         }
+        return ResponseEntity.notFound().build();
     }
 }
 

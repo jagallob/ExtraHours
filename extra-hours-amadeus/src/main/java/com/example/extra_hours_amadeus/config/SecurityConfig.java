@@ -36,7 +36,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**", "/public/**").permitAll()
                         .requestMatchers("/manager/**").hasAnyAuthority("manager")
                         .requestMatchers("/empleado/**").hasAnyAuthority("empleado")
-                        .requestMatchers("/superusuario/**").hasAnyAuthority("superusuario")
+                        .requestMatchers("/superusuario/**").hasAnyAuthority("superusuario"
                         .requestMatchers("/api/employee/**").authenticated()
                         .requestMatchers("/api/logout").authenticated()
                         .requestMatchers("/auth/change-password").authenticated()

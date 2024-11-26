@@ -9,11 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ExtraHourRepository extends JpaRepository<ExtraHour, Long> {
-    List<ExtraHour> findExtraHoursById(long id);
+    List<ExtraHour> findExtraHoursById(long id); // Busca todos los registros por el ID del empleado
     List<ExtraHour> findByDateBetween(LocalDate startDate, LocalDate endDate);
-    Optional<ExtraHour> findByRegistry(Long registry);
-    void deleteByRegistry(Long registry);
-    boolean existsByRegistry(Long registry);
+    Optional<ExtraHour> findByRegistry(int registry);
 }
 
 

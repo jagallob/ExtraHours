@@ -37,8 +37,7 @@ public class EmployeeController {
     @Autowired
     private ManagerRepository managerRepository;
 
-
-
+    @PreAuthorize("hasAnyAuthority('manager', 'empleado', 'superusuario')")
     @GetMapping("/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
         Optional<Employee> employeeOptional = employeeService.findById(id);
@@ -63,6 +62,7 @@ public class EmployeeController {
             return ResponseEntity.badRequest().body(Map.of("error", "Manager ID es requerido"));
         }
         try {
+
             Optional<Manager> optionalManager = managerRepository.findById(dto.getManager_id());
             if (optionalManager.isEmpty()) {
                 return ResponseEntity.badRequest().body(Map.of("error", "Manager no encontrado con el ID proporcionado"));
@@ -88,7 +88,7 @@ public class EmployeeController {
                     email,
                     dto.getName(),
                     encodedPassword,
-                    dto.getRole() != null ? dto.getRole() : "empleado",
+                    dto.getRole() != null ? dto.getRole() : "",
                     username
             );
 
@@ -97,12 +97,12 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(Map.of("message", "Empleado y usuario agregados exitosamente"));
         } catch (Exception e) {
-            // Captura errores inesperados y los devuelve en JSON
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Error al agregar empleado", "details", e.getMessage()));
         }
     }
 
+    @PreAuthorize("hasAuthority('superusuario')")
     @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, String>> updateEmployee(@PathVariable("id") Long id, @RequestBody UpdateEmployeeDTO dto) {
@@ -121,7 +121,7 @@ public class EmployeeController {
 
             Map<String, String> response = new HashMap<>();
             response.put("message", "Empleado actualizado correctamente");
-            response.put("manager_id", String.valueOf(updatedEmployee.getManager().getId()));
+            response.put("manager_id", String.valueOf(updatedEmployee.getManager().getManager_id()));
             response.put("manager_name", updatedEmployee.getManager().getManager_name());
 
             return ResponseEntity.ok(response);
@@ -130,7 +130,7 @@ public class EmployeeController {
         }
     }
 
-
+    @PreAuthorize("hasAuthority('superusuario')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
