@@ -11,18 +11,17 @@ public class Employee {
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
-
     private String name;
     private String position;
     private Double salary;
 
 
     @ManyToOne
-    @JoinColumn(name = "manager_id", insertable = true, updatable = true)
+    @JoinColumn(name = "manager_id", referencedColumnName = "manager_id")
+    @JoinColumn(name = "manager_name", referencedColumnName = "manager_name")
     private Manager manager;
 
-    public Employee(Long id, String name, String position, Double salary,  Manager manager) {
-
+    public Employee(Long id, String name, String position, Double salary, Manager manager) {
         this.id = id;
         this.name = name;
         this.position = position;

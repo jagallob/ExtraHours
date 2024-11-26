@@ -146,9 +146,6 @@ export const PersonalSettings = () => {
           required
         >
           <option value=""></option>
-
-          <option value="empleado">Empleado</option>
-
           <option value="manager">Manager</option>
           <option value="empleado">Empleado</option>
           <option value="superusuario">Superusuario</option>
