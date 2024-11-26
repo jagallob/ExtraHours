@@ -37,7 +37,7 @@ public class EmployeeController {
     @Autowired
     private ManagerRepository managerRepository;
 
-    @PreAuthorize("hasAnyAuthority('manager', 'empleado', 'superusuario')")
+
     @GetMapping("/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
         Optional<Employee> employeeOptional = employeeService.findById(id);
@@ -102,7 +102,9 @@ public class EmployeeController {
         }
     }
 
+
     @PreAuthorize("hasAuthority('superusuario')")
+
     @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, String>> updateEmployee(@PathVariable("id") Long id, @RequestBody UpdateEmployeeDTO dto) {
@@ -121,7 +123,9 @@ public class EmployeeController {
 
             Map<String, String> response = new HashMap<>();
             response.put("message", "Empleado actualizado correctamente");
-            response.put("manager_id", String.valueOf(updatedEmployee.getManager().getManager_id()));
+
+            response.put("manager_id", String.valueOf(updatedEmployee.getManager().getId()));
+
             response.put("manager_name", updatedEmployee.getManager().getManager_name());
 
             return ResponseEntity.ok(response);
@@ -130,7 +134,6 @@ public class EmployeeController {
         }
     }
 
-    @PreAuthorize("hasAuthority('superusuario')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);

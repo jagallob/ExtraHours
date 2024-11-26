@@ -12,6 +12,17 @@ import lombok.Data;
 public class Manager {
     @Id
     @Column(name = "manager_id", nullable = false)
-    private Long manager_id;
+
+    private Long id;
+
+    @Column(name = "manager_name", nullable = false)
     private String manager_name;
+
+    public Manager(Long id, String manager_name) {
+        this.id = id;
+        this.manager_name = manager_name;
+    }
+
+    public Manager() {}
+
 }

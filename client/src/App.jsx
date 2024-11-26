@@ -14,6 +14,9 @@ import { ConfigProvider } from "./utils/ConfigProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SettingsPage from "./pages/Settings/SettingsPage";
 
+import UpdateDeletePersonal from "./components/UpdateDeletePersonal/UpdateDeletePersonal";
+
+
 function App() {
   return (
     <Router>
