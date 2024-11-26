@@ -7,6 +7,7 @@ import com.example.extra_hours_amadeus.repository.EmployeeRepository;
 import com.example.extra_hours_amadeus.repository.ExtraHourRepository;
 import com.example.extra_hours_amadeus.repository.ManagerRepository;
 import com.example.extra_hours_amadeus.repository.UsersRepo;
+
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class EmployeeService {
 
     public List<Employee> getEmployeesByManagerId(Long manager_id) {
         return employeeRepository.findByManager_Id(manager_id);
+
     }
 
     public Optional<Employee> findById(Long id) {
@@ -48,6 +50,7 @@ public class EmployeeService {
 
     @Transactional
     public Employee updateEmployee(Long id, UpdateEmployeeDTO dto) {
+
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
 
@@ -64,16 +67,19 @@ public class EmployeeService {
 
 
         return employeeRepository.save(employee);
+
     }
 
     @Transactional
     public void deleteEmployee(Long id) {
+
         Optional<Employee> employee = employeeRepository.findById(id);
         if (employee.isPresent()) {
             employeeRepository.delete(employee.get());
         } else {
             throw new RuntimeException("Empleado no encontrado");
         }
+
     }
 }
 

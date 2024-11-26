@@ -136,7 +136,7 @@ export const ReportInfo = () => {
       <div className="filters-container">
         <div className="search-container">
           <Input.Search
-            placeholder="Ingrese ID del empleado"
+            placeholder="Ingrese ID del empelado"
             onSearch={handleSearch}
             onChange={(e) => setSearchValue(e.target.value)}
             value={searchValue}

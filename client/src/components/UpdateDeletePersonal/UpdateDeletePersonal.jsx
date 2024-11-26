@@ -40,6 +40,7 @@ const UpdateDeletePersonal = () => {
       const response = await updateEmployee(selectedEmployee.id, values);
       message.success(response.message);
       setEditModalOpen(false);
+
       setEmployees((prevEmployees) =>
         prevEmployees.map((emp) =>
           emp.id === selectedEmployee.id
@@ -55,6 +56,9 @@ const UpdateDeletePersonal = () => {
             : emp
         )
       );
+
+      onSearch(selectedEmployee.id);
+
     } catch (error) {
       console.error(error);
       message.error("Error al actualizar el empleado");

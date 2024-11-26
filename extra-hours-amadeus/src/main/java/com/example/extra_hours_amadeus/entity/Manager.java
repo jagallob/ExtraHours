@@ -6,12 +6,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Data
 @Entity
+@Data
 @Table(name = "managers")
 public class Manager {
     @Id
     @Column(name = "manager_id", nullable = false)
+
     private Long id;
 
     @Column(name = "manager_name", nullable = false)
@@ -23,4 +24,5 @@ public class Manager {
     }
 
     public Manager() {}
+
 }

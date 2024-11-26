@@ -1,12 +1,10 @@
 package com.example.extra_hours_amadeus.service;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -18,7 +16,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
-@Service
 public class JWTUtils {
 
     private final SecretKey key;
@@ -98,6 +95,7 @@ public class JWTUtils {
         return extractClaims(token, Claims::getExpiration).before(new Date());
     }
 
+
     public int getManagerIdFromToken(String token) {
 
         if (token == null || token.isEmpty()) {
@@ -120,5 +118,6 @@ public class JWTUtils {
 
         return managerId;
     }
+
 
 }
