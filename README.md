@@ -32,7 +32,7 @@ El sistema está diseñado para cumplir con las normativas laborales colombianas
 - Instalar Vite en el client side del frontend:
    npm i vite
 
-- Iniciar el cliente (frontend) con el siguienre comando:
+- Iniciar el cliente (frontend) con el siguiente comando:
    npm run dev
 
 - Activar el backend desde el IDE (por ejemplo, IntelliJ IDEA).
