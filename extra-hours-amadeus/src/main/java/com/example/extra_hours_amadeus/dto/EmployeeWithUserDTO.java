@@ -1,5 +1,6 @@
 package com.example.extra_hours_amadeus.dto;
 
+import com.example.extra_hours_amadeus.entity.Manager;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

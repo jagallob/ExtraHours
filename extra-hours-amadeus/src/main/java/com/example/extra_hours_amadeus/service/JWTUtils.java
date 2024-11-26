@@ -1,10 +1,12 @@
 package com.example.extra_hours_amadeus.service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -16,6 +18,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
+@Service
 public class JWTUtils {
 
     private final SecretKey key;
@@ -95,57 +98,27 @@ public class JWTUtils {
         return extractClaims(token, Claims::getExpiration).before(new Date());
     }
 
-//    public Claims extractClaims(String token) {
-//        return Jwts.parser()
-//                .setSigningKey(key)
-//                .build()
-//                .parseClaimsJws(token)
-//                .getBody();
-//    }
-//
-//    public String generateToken(UserDetails userDetails) {
-//        return Jwts.builder()
-//                .setSubject(userDetails.getUsername())
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-//                .signWith(key, SignatureAlgorithm.HS256)
-//                .compact();
-//    }
-//
-//    public String generateRefreshToken(HashMap<String, Object> claims, UserDetails userDetails) {
-//        return Jwts.builder()
-//                .setClaims(claims)
-//                .setSubject(userDetails.getUsername())
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-//                .signWith(key, SignatureAlgorithm.HS256)
-//                .compact();
-//    }
-//
-//    public Claims extractClaims(String token) {
-////        System.out.println("Token before parsing: " + token);
-//        return Jwts.parser()
-//                .setSigningKey(key)
-//                .build()
-//                .parseClaimsJws(token)
-//                .getBody();
-//    }
-//
-//    public String extractUsername(String token) {
-//        return extractClaims(token, Claims::getSubject);
-//    }
-//
-//    private <T> T extractClaims(String token, Function<Claims, T> claimsResolver) {
-//        final Claims claims = extractClaims(token);
-//        return claimsResolver.apply(claims);
-//    }
-//
-//    public boolean isTokenValid(String token, UserDetails userDetails) {
-//        final String username = extractUsername(token);
-//        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-//    }
-//
-//    public boolean isTokenExpired(String token) {
-//        return extractClaims(token, Claims::getExpiration).before(new Date());
-//    }
+    public int getManagerIdFromToken(String token) {
+
+        if (token == null || token.isEmpty()) {
+            throw new IllegalArgumentException("El token JWT es nulo o vacío");
+        }
+
+        JwtParser parser = Jwts.parser()
+                .setSigningKey(key)
+                .build();
+
+        Claims claims = parser.parseClaimsJws(token.replace("Bearer ", ""))
+                .getBody();
+
+
+        Integer managerId = claims.get("id", Integer.class);
+
+        if (managerId == null) {
+            throw new IllegalArgumentException("El token no contiene un id");
+        }
+
+        return managerId;
+    }
+
 }
