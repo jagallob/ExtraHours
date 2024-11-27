@@ -82,11 +82,35 @@ h1 {
 
 .logout-button:hover,
 .change-password-button:hover {
-  background-color: #a4a4a4;
+  background-color: #1677ff;
+  color:#ebf3ff
 }
+
 .container {
   display: grid;
   grid-template-columns: auto auto; // Dos columnas: una para la imagen y otra para el texto
   gap: 1rem; // Espacio entre elementos
   margin-right: 10px; 
+}
+
+.change-password-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0;
+  background-color: #ebf3ff;
+  border: 2px solid #0c66e1;
+  color: #0c66e1;
+}
+
+.logout-button  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0;
+  background-color: #ebf3ff;
+  border: 2px solid #0c66e1;
+  color: #0c66e1;
 }

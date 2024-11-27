@@ -1,5 +1,14 @@
-body {
-  background-color: rgb(1, 3, 57);
+.subpage-container {
+  background-image: url("/client/src/assets/images/menubackground.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 130vh;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  margin-top: 0px;
 }
 
 .regresar {

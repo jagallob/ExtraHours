@@ -16,6 +16,7 @@ const SettingsPage = () => {
 
   return (
     <div>
+       <div className={isSubPage ? "subpage-container" : "settings-container"}>
       <header className="page__header">
         <Link to="/menu">
           <img className="logoamadeus" src={logoamadeus} alt="Logo Amadeus" />
@@ -60,6 +61,7 @@ const SettingsPage = () => {
         )}
         <Outlet />
       </div>
+    </div>
     </div>
   );
 };

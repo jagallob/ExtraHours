@@ -66,7 +66,7 @@ const ExtraHoursMenu = () => {
               <div id="imgagregar">
                 <img src={Agregar} alt="Agregar" />
               </div>
-              <p>Registrar Horas</p>
+              <p>Registrar Horas Extra</p>
             </div>
             <div
               className="menu-item"
