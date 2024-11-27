@@ -2,8 +2,8 @@ import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import logoamadeus from "../../assets/images/logoamadeus.png";
 import "./SettingsPage.scss";
-import Configuracion from "../../assets/images/Configuracion.png";
-import Pagar from "../../assets/images/Pagar.png";
+import Parametros from "../../assets/images/Parametros.png";
+import Eliminar from "../../assets/images/Eliminar.png";
 import Regresar from "../../assets/images/Regresar.png";
 import Agregar from "../../assets/images/Agregar.png";
 
@@ -38,7 +38,7 @@ const SettingsPage = () => {
               onClick={() => navigate("/settings/ExtraHoursSettings")}
             >
               <div id="imgagregar">
-                <img src={Configuracion} alt="Engranage" />
+                <img src={Parametros} alt="Engranage" />
               </div>
               <p>Parámetros Horas Extra</p>
             </div>
@@ -46,14 +46,14 @@ const SettingsPage = () => {
               className="menu-item"
               onClick={() => navigate("/settings/PersonalSettings")}
             >
-              <img src={Pagar} alt="Ícono de perfil con engranage" />
-              <p>Ajustes Personal</p>
+              <img src={Agregar} alt="Ícono de perfil con engranage" />
+              <p>Agregar Empleado</p>
             </div>
             <div
               className="menu-item"
               onClick={() => navigate("/settings/UpdateDeletePersonal")}
             >
-              <img src={Agregar} alt="ïcono de más (+)" />
+              <img src={Eliminar} alt="ïcono de más (+)" />
               <p>Actualizar ó Eliminar Personal</p>
             </div>
           </div>

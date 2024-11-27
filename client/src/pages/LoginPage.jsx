@@ -4,6 +4,7 @@ import { Form, Input, Button, message } from "antd";
 import { useAuth } from "../utils/AuthContext";
 import { UserService } from "../services/UserService";
 import "./LoginPage.scss";
+import Logo from "../../../client/src/assets/images/Logo.png"; 
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -42,6 +43,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <h2>Bienvenido</h2>
+      <img className="Logo" src={Logo} alt="Logo Amadeus" />
       <Form name="login-form" onFinish={handleLogin} layout="vertical">
         <Form.Item
           label="Correo Electrónico"

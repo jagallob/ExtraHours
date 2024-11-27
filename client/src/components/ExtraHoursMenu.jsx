@@ -5,8 +5,9 @@ import ChangePasswordModal from "../components/ChangePasswordModal/ChangePasswor
 import "./ExtraHoursMenu.scss";
 import Agregar from "../assets/images/Agregar.png";
 import Configuracion from "../assets/images/Configuracion.png";
-import Eliminar from "../assets/images/Eliminar.png";
+import Gestion from "../assets/images/Gestion.png";
 import Informes from "../assets/images/Informes.png";
+import Logo from "../assets/images/Logo.png";
 
 const ExtraHoursMenu = () => {
   const navigate = useNavigate();
@@ -30,10 +31,8 @@ const ExtraHoursMenu = () => {
       case "empleado":
         return (
           <>
-            <div className="menu-item" onClick={() => navigate("/add")}>
-              <div id="imgagregar">
-                <img src={Agregar} alt="Agregar" />
-              </div>
+             <div className="menu-item" onClick={() => navigate("/add")}>
+              <img src={Agregar} alt="Agregar" />
               <p>Agregar</p>
             </div>
             <div className="menu-item" onClick={() => navigate("/reports")}>
@@ -54,8 +53,8 @@ const ExtraHoursMenu = () => {
               className="menu-item"
               onClick={() => navigate("/ManagementExtraHour")}
             >
-              <img src={Eliminar} alt="Eliminar" />
-              <p>Gestión Horas Extra</p>
+              <img src={NominaAprobar} alt="Nómina - Aprobar" />
+              <p>Nómina - Aprobar</p>
             </div>
           </>
         );
@@ -67,14 +66,14 @@ const ExtraHoursMenu = () => {
               <div id="imgagregar">
                 <img src={Agregar} alt="Agregar" />
               </div>
-              <p>Agregar</p>
+              <p>Registrar Horas</p>
             </div>
             <div
               className="menu-item"
               onClick={() => navigate("/ManagementExtraHour")}
             >
-              <img src={Eliminar} alt="Eliminar" />
-              <p>Gestión Horas Extra</p>
+              <img src={Gestion} alt="Gestion de horas" />
+              <p>Gestionar Registro de Horas</p>
             </div>
             <div className="menu-item" onClick={() => navigate("/reports")}>
               <img src={Informes} alt="Informes" />
@@ -94,7 +93,10 @@ const ExtraHoursMenu = () => {
   return (
     <div>
       <div className="menu">
-        <h1>Horas extra Amadeus</h1>
+       <div class="container">
+          <img className="Logo" src={Logo} alt="Logo Amadeus" />
+       </div>
+       <h1>Sistema de Gestión de Horas Extra</h1>
         <div className="grid">{renderMenuItems()}</div>
         <div className="button-container">
           <button className="logout-button" onClick={handleLogout}>

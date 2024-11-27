@@ -1,11 +1,12 @@
 form {
   max-width: 900px;
-  width: 80%;
+  display:block;
+  width: 100%;
   margin: 0 auto;
-  padding: 10px;
+  padding: 0px;
   background-color: #010a41;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(231, 231, 243, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(245, 245, 249, 0.1);
 
   .form-group-date-time {
     display: flex;
@@ -22,14 +23,14 @@ form {
 
       label {
         font-weight: bold;
-        color: #ccc;
+        color: #ebf3ff;
         margin-bottom: 5px;
         margin-left: 30px;
       }
 
       input {
         padding: 10px;
-        border: 1px solid #ccc;
+        border: 1px solid #ebf3ff;
         border-radius: 4px;
         font-size: 14px;
         width: 70%;
@@ -51,18 +52,18 @@ form {
       font-family: Arial, Helvetica, sans-serif;
       margin-right: 10px;
       font-size: 14px;
-      color: #ccc;
+      color: #ebf3ff;
     }
 
     p {
-      color: #ccc;
+      color: #ebf3ff;
       font-weight: bold;
       font-family: Arial, Helvetica, sans-serif;
     }
 
     input[type="date"] {
       padding: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid #ebf3ff;
       border-radius: 4px;
       font-size: 14px;
       width: 60%;
@@ -79,16 +80,16 @@ form {
       box-sizing: border-box;
 
       &:focus {
-        border-color: #ccc;
+        border-color: #ebf3ff;
         outline: none;
-        box-shadow: 0 0 5px #3a8bff;
+        box-shadow: 0 0 5px #0c66e1;
       }
     }
 
     textarea {
       width: 80%;
       padding: 10px;
-      border: 1px solid #3a8bff;
+      border: 1px solid #0c66e1;
       border-radius: 4px;
       font-size: 14px;
       box-sizing: border-box;
@@ -96,7 +97,7 @@ form {
       display: block;
 
       &:focus {
-        border-color: #3a8bff;
+        border-color: #0c66e1;
         outline: none;
         box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
       }
@@ -114,8 +115,8 @@ form {
     width: 50%;
     margin: 0 auto;
     padding: 12px 20px;
-    background-color: #ccc;
-    color: #3a8bff;
+    background-color: #ebf3ff;
+    color: #0c66e1;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -125,7 +126,7 @@ form {
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: #0056b3;
+      background-color: #0c66e1;
     }
   }
 }

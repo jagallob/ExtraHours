@@ -11,18 +11,31 @@ body {
   margin-top: 0px;
 }
 
+.Logo {
+  width: 300px; /* Ajusta el ancho */
+  height: auto; /* Mantiene la proporción */
+  display: block; /* Centra el logo si es necesario */
+  margin: 0 auto; /* Centra horizontalmente */
+ //margin-top: 10px; 
+  margin-bottom: 20px;
+  position: absolute;
+  top: 10px; /* Ajusta la distancia desde arriba */
+  left: 50%; /* Centra horizontalmente */
+  transform: translateX(-50%); /* Corrige el centrado exacto */
+}
+
 .login-container {
   max-width: 400px;
   margin: 100px auto;
   padding: 20px;
-  background-color: #3a8bff;
+  background-color: #0c66e1;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgb(106, 105, 105);
 
   h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: whitesmoke;
+    color: #ebf3ff;
     font-family: Arial, Helvetica, sans-serif;
   
   }
@@ -38,7 +51,7 @@ body {
     
   }
   .ant-form-item label {
-    color: #ccc; 
+    color: #ebf3ff;
   }
 
   .button {
@@ -47,6 +60,8 @@ body {
     align-items: center;
     text-align: center;
     padding: 0;
-    
+    background-color: #ebf3ff;
+    border: 2px solid #0c66e1;
+    color: #0c66e1;
   }
 }
