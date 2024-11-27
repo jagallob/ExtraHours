@@ -110,3 +110,122 @@ El sistema está diseñado para cumplir con las normativas laborales colombianas
 
 ### **Superusuario**
 #### - Acceso: Configurar parámetros del sistema, gestionar empleados, y realizar todas las acciones de empleados y managers.
+
+
+
+## -English Version-
+
+
+# ExtraHours
+
+Wireframes
+https://miro.com/app/board/uXjVKxUM7T8=/?moveToWidget=3458764597049633884&cot=14
+https://www.figma.com/design/QdMm6JmxJ7tPx4XKkLhXLB/Extra-Hours-Delta?node-id=0-1&m=dev&t=o7T4U9zHz9zgULpy-1
+
+ # **USER GUIDE**
+ 
+## **Introduction**
+
+
+This user manual was written to guide employees, managers, and administrators who will use the Amadeus overtime management system. This system allows users to:
+
+- Add, update, delete, and approve overtime records.
+- Generate detailed reports.
+- Configure parameters related to overtime.
+- Manage employees (add, update, and delete personnel).
+
+The system was designed to comply with the Colombian labor regulations related to overtime management.
+
+
+
+## **Technologies used**
+
+- Frontend: React con JavaScript
+- Backend: Java con Spring Boot
+- Database: MySQL
+
+## **Initial Recommendations**
+
+- Perform the necessary global installations with the following command:
+  npm i
+
+- Install Vite on the client side of the frontend:
+  npm i vite
+
+- Start the client (frontend) with the following command:
+  npm run dev
+
+- Activate the backend from the IDE (e.g., IntelliJ IDEA).
+
+- Ensure that the MySQL database is active and properly configured.
+
+
+## **Main Features**
+
+### 1. **Add Overtime**
+   
+##### **Profile**: Employee / Superuser  
+##### **Action**: Register new overtime hours.  
+##### **Required Fields:**  
+#### Employee ID (identification number).  
+#### Record date.  
+#### Start time and end time.  
+#### Observations.
+
+### 2. **Overtime Management**
+   
+##### **Profile**: Manager / Superuser  
+##### **Action**: Update, approve, or delete overtime records. The system will issue an alert if the employee exceeds the configured weekly overtime limit.  
+##### **Required Fields:**  
+##### Employee ID (identification number).  
+
+## 3. **Generate Reports**
+   
+##### **Profile**: Employee / Manager / Superuser  
+##### **Action**: Generate and download reports in Excel format.  
+##### **Generation Options:**  
+##### - By Employee ID (identification number).  
+##### - By date range (start and end).  
+##### **Required Fields:**  
+##### Employee ID (identification number).  
+##### Date range (Start and End).  
+
+## 4. **Settings**
+ 
+##### **Profile**: Superuser  
+##### **Action**: Configure parameters and manage personnel.  
+
+####  4.1 Configure overtime parameters:  
+#####   - Weekly overtime limit.  
+#####   - Daytime Hour Multiplier.  
+#####   - Nighttime Hour Multiplier.  
+#####   - Holiday Daytime Hour Multiplier.  
+#####   - Holiday Nighttime Hour Multiplier.  
+#####   - Daytime Hour Start (24h format).  
+#####   - Daytime Hour End (24h format).  
+
+####  4.2 Add new personnel:  
+##### **Required Fields:**  
+#####   - ID (identification number).  
+#####   - Name.  
+#####   - Position.  
+#####   - Salary.  
+#####   - Assigned manager.  
+#####   - Manager ID.  
+#####   - Select the role.  
+#####   Note: The email is generated automatically. Clicking "Add" creates a new user in the *users* table. The default initial password is *password123*, Is recommended to change the password upon the first login.  
+
+####  4.3 Update or Delete personnel:  
+##### **Required Fields:**  
+#####   - ID  
+
+## **Roles**
+
+### **Employee**  
+#### - Access: Register overtime hours, and view your reports.
+
+### **Manager**  
+#### - Access: Manage overtime hours (update, approve, delete), generate reports by date range or by the employee.
+
+### **Superuser**  
+#### - Access: Configure system parameters, manage employees and perform all actions available to employees and managers. 
