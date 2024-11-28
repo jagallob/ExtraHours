@@ -8,6 +8,7 @@ import Configuracion from "../assets/images/Configuracion.png";
 import Gestion from "../assets/images/Gestion.png";
 import Informes from "../assets/images/Informes.png";
 import Logo from "../assets/images/Logo.png";
+import NominaAprobar from "../assets/images/NominaAprobar.png";
 
 const ExtraHoursMenu = () => {
   const navigate = useNavigate();
