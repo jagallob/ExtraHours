@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { addEmployee } from "@services/addEmployee";
+import "./PersonalSettings.scss";
 
 export const PersonalSettings = () => {
   const [newEmployee, setNewEmployee] = useState({
@@ -59,9 +60,9 @@ export const PersonalSettings = () => {
 
   return (
     <form onSubmit={handleSubmitNewEmployee}>
-      <h2>Agregar Nuevo Empleado</h2>
+      <h3>Agregar Nuevo Empleado</h3>
       <div>
-        <label htmlFor="id">id</label>
+        <label htmlFor="id">ID</label>
         <input
           type="number"
           id="id"
@@ -151,7 +152,9 @@ export const PersonalSettings = () => {
           <option value="superusuario">Superusuario</option>
         </select>
       </div>
-      <button type="submit" disabled={loading}>
+      <button 
+       className="addNewButton"
+       type="submit" disabled={loading}>
         {loading ? "Agregando..." : "Agregar Empleado"}
       </button>
       {error && <p>Error: {error}</p>}
