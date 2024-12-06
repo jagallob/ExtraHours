@@ -11,7 +11,7 @@ const Reports = () => {
           <img className="logoamadeus" src={logoamadeus} alt="Logo Amadeus" />
         </Link>
       </header>
-      <h2>Informes</h2>
+      <h2 className="h2Info">Informes</h2>
       <ReportInfo />
     </>
   );

@@ -12,12 +12,13 @@ h3 {
 .ant-modal {
   h2 {
     padding: 0 10px 5px;
+    color: #000835;
   }
   .ant-modal-content {
     width: 500px;
     max-width: 120vw;
     padding: 20px;
-    background-color: rgb(85, 99, 224);
+    background-color: #c5d5f9
   }
 
   .ant-form-item {
@@ -26,6 +27,7 @@ h3 {
     margin-bottom: 5px;
     height: 45px;
     padding: 8px;
+    border-radius: 10px;
 
     label {
       color: #f8f2f2;
@@ -43,5 +45,8 @@ h3 {
     align-items: center;
     text-align: center;
     padding: 0;
+    background-color: #ebf3ff;
+    border: 2px solid #0c66e1;
+    color: #0c66e1;
   }
 }

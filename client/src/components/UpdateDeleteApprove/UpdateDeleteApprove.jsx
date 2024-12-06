@@ -285,7 +285,7 @@ export const UpdateDeleteApprove = () => {
         >
           <div className="modal__container">
             <header>
-              <h2>Actualizar registro</h2>
+              <h2>Actualizar Registro</h2>
             </header>
             <Form
               initialValues={selectedRow}

@@ -42,9 +42,11 @@ const Login = () => {
 
   return (
     <>
-      <h1 id="iniciar">Iniciar sesión</h1>
+
+      <h1 id="iniciar">Bienvenido</h1>
       <div className="login-container">
-        <h2>Bienvenido</h2>
+        <h2>Iniciar sesión</h2>
+
         <img className="Logo" src={Logo} alt="Logo Amadeus" />
         <Form
           name="login-form"

@@ -4,6 +4,8 @@ import { findEmployee } from "@services/findEmployee";
 import { updateEmployee } from "@services/updateEmployee";
 import { deleteEmployee } from "@services/deleteEmployee";
 import PropTypes from "prop-types";
+import "./UpdateDeletePersonal.scss";
+
 
 const { Search } = Input;
 
@@ -130,7 +132,7 @@ const UpdateDeletePersonal = () => {
 
   return (
     <div className="EmployeeManagementPage">
-      <h2>Actualizar o eliminar Personal</h2>
+      <h2>Actualizar ó Eliminar Personal</h2>
       <div className="search-container">
         <Search placeholder="Buscar por ID de empleado" onSearch={onSearch} />
       </div>
@@ -154,8 +156,8 @@ const UpdateDeletePersonal = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            name="manager_id"
-            label="Manager_id"
+            name="Manager_id"
+            label="Manager_ID"
             rules={[{ required: true }]}
           >
             <Input type="number" />
