@@ -152,9 +152,7 @@ export const PersonalSettings = () => {
           <option value="superusuario">Superusuario</option>
         </select>
       </div>
-      <button 
-       className="addNewButton"
-       type="submit" disabled={loading}>
+      <button className="addNewButton" type="submit" disabled={loading}>
         {loading ? "Agregando..." : "Agregar Empleado"}
       </button>
       {error && <p>Error: {error}</p>}
