@@ -106,7 +106,7 @@ export const ReportInfo = () => {
         { header: "Empleado", key: "name", width: 30 },
         { header: "Salario", key: "salary", width: 15 },
         { header: "Cargo", key: "position", width: 30 },
-        { header: "Manager", key: "manager", width: 30 },
+        { header: "Manager", key: "manager_name", width: 30 },
         { header: "Fecha", key: "date", width: 15 },
         { header: "Diurnas", key: "diurnal", width: 10 },
         { header: "Nocturnas", key: "nocturnal", width: 10 },
@@ -119,7 +119,11 @@ export const ReportInfo = () => {
       ];
 
       data.forEach((task) => {
-        worksheet.addRow({ ...task, approved: task.approved ? "Sí" : "No" });
+        worksheet.addRow({
+          ...task,
+          manager_name: task.manager.manager_name,
+          approved: task.approved ? "Sí" : "No",
+        });
       });
 
       worksheet.getRow(1).font = { bold: true };

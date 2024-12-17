@@ -19,7 +19,6 @@ h1 {
   font-family: sans-serif;
   margin-left: 10px;
   margin-top: 150px;
- 
 }
 
 .grid {
@@ -46,6 +45,8 @@ h1 {
 
 .menu-item:hover {
   transform: translateY(-10px);
+  background-color: #96bdf8;
+  box-shadow: 0 0 4px 4px rgba($color: hsl(245, 63%, 32%), $alpha: 1);
 }
 
 .menu-item img {
@@ -83,14 +84,14 @@ h1 {
 .logout-button:hover,
 .change-password-button:hover {
   background-color: #1677ff;
-  color:#ebf3ff
+  color: #ebf3ff;
 }
 
 .container {
   display: grid;
   grid-template-columns: auto auto; // Dos columnas: una para la imagen y otra para el texto
   gap: 1rem; // Espacio entre elementos
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .change-password-button {
@@ -104,7 +105,7 @@ h1 {
   color: #0c66e1;
 }
 
-.logout-button  {
+.logout-button {
   display: flex;
   justify-content: center;
   align-items: center;
