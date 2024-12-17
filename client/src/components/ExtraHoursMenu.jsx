@@ -34,7 +34,7 @@ const ExtraHoursMenu = () => {
           <>
             <div className="menu-item" onClick={() => navigate("/add")}>
               <img src={Agregar} alt="Agregar" />
-              <p>Agregar</p>
+              <p>Registrar Horas Extra</p>
             </div>
             <div className="menu-item" onClick={() => navigate("/reports")}>
               <img src={Informes} alt="Informes" />
@@ -94,7 +94,7 @@ const ExtraHoursMenu = () => {
   return (
     <div>
       <div className="menu">
-        <div class="container">
+        <div className="container">
           <img className="Logo" src={Logo} alt="Logo Amadeus" />
         </div>
         <h1>Sistema de Gestión de Horas Extra</h1>

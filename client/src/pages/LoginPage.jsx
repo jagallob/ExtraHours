@@ -42,7 +42,6 @@ const Login = () => {
 
   return (
     <>
-
       <h1 id="iniciar">Bienvenido</h1>
       <div className="login-container">
         <h2>Iniciar sesión</h2>
@@ -59,8 +58,8 @@ const Login = () => {
             name="email"
             rules={[
               {
-                required: true,
-                message: "Por favor ingrese su correo electrónico",
+                // required: true,
+                // message: "Por favor ingrese su correo electrónico",
               },
             ]}
           >
@@ -70,9 +69,11 @@ const Login = () => {
           <Form.Item
             label="Contraseña"
             name="password"
-            rules={[
-              { required: true, message: "Por favor ingrese su contraseña" },
-            ]}
+            rules={
+              [
+                // { required: true, message: "Por favor ingrese su contraseña" },
+              ]
+            }
           >
             <Input.Password placeholder="Contraseña" />
           </Form.Item>

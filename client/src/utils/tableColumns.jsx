@@ -9,16 +9,16 @@ export const columns = [
     dataIndex: "name",
     key: "name",
   },
-  {
-    title: "Salario",
-    dataIndex: "salary",
-    key: "salary",
-  },
-  {
-    title: "Cargo",
-    dataIndex: "position",
-    key: "position",
-  },
+  // {
+  //   title: "Salario",
+  //   dataIndex: "salary",
+  //   key: "salary",
+  // },
+  // {
+  //   title: "Cargo",
+  //   dataIndex: "position",
+  //   key: "position",
+  // },
   {
     title: "Manager",
     dataIndex: ["manager", "manager_name"],
